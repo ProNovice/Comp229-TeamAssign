@@ -128,16 +128,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Movie_Maniac_Favicon.png" />
-    <Content Include="Assets\Movie_Maniac_Logo.JPG" />
-    <Content Include="Assets\Movie_Maniac_Logo_Title_h.JPG" />
-    <Content Include="Assets\Movie_Maniac_Logo_Title_v.JPG" />
-    <Content Include="Assets\Movie_Maniac_Title.JPG" />
+    <Content Include="Assets\Movie_Maniac_Logo.png" />
+    <Content Include="Assets\Movie_Maniac_Logo_Title_h.png" />
+    <Content Include="Assets\Movie_Maniac_Logo_Title_v.png" />
+    <Content Include="Assets\Movie_Maniac_Title.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\MovieManiac.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
-    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
