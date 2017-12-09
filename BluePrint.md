@@ -20,3 +20,8 @@ DetailPage:
   2.	Link to a page to edit the movie or include that functionality in this page for authorized users
   3.	Allow to set the movie as owned/wanted/loaned and changing between them
   4.	Anonymous users can only view owned movie
+
+
+Typography and Colour Section:
+  Colors: Purple = #6c208d; Yellow = #ffd92c;
+  Font: Lobstor
