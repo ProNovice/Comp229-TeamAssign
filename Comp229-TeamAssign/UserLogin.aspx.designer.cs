@@ -11,7 +11,7 @@ namespace Comp229_TeamAssign
 {
 
 
-    public partial class _Default
+    public partial class UserLogin
     {
     }
 }

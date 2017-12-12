@@ -16,6 +16,8 @@
     <link href="Assets/Movie_Maniac_Favicon.PNG" rel="shortcut icon" type="image/x-icon" />
     <link href="Content/MovieManiac.css" rel="stylesheet" />
     <link href="Content/bootstrap.css" rel="stylesheet" />
+    <!-- Lobstor Font -->
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 
 </head>
 <body>
@@ -60,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <div class="container body-content">
+        <div class="container body-content" style="font-family:'Lobster', cursive;">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />
