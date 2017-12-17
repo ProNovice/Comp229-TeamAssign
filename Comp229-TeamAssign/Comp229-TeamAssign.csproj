@@ -136,6 +136,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\MovieManiac.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Main.aspx" />
     <Content Include="MovieDetail.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -146,7 +147,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="MainTracking.aspx" />
     <Content Include="MovieAddition.aspx" />
     <Content Include="UserRegistration.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -196,13 +196,6 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="MainTracking.aspx.cs">
-      <DependentUpon>MainTracking.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MainTracking.aspx.designer.cs">
-      <DependentUpon>MainTracking.aspx</DependentUpon>
     </Compile>
     <Compile Include="MovieAddition.aspx.cs">
       <DependentUpon>MovieAddition.aspx</DependentUpon>
