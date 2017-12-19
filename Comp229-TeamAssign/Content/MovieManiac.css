@@ -34,3 +34,56 @@ body {
             border-top: 0 none;
         }
 }
+
+
+.page-context {
+    background-color: white;
+    min-height: 500px;
+    padding: 20px;
+}
+
+.subtitle {
+    font-size: 35px;
+
+}
+
+.banner {
+    width:100%;
+}
+
+    .banner img {
+    }
+
+
+.movieList {
+
+}
+.movieTitle {
+        font-weight: bold;
+            font-size: 25px;
+    }
+
+.movieListRow {
+    margin-bottom: 50px;
+}
+
+.movieListTable {
+    margin: 20px;
+    padding: 15px;
+    box-shadow: 5px;
+    border-radius: 5px;
+    width: 220px;
+    height: 100px;
+}
+
+.movieListPicture {
+    max-width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 5px;
+}
+
+.movieListInfo {
+    padding: 20px;
+    font-size: 20px;
+}
