@@ -48,7 +48,7 @@
 			<hr class="colorgraph">
 			<div class="row">
 				<div class="col-xs-12 col-md-6"><input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" onclick="submitBtn_Click"></div>
-				<div class="col-xs-12 col-md-6"><a href="~/MainTracking.aspx" class="btn btn-danger btn-block btn-lg">Cancel</a></div>
+				<div class="col-xs-12 col-md-6"><a href="MainTracking.aspx" class="btn btn-danger btn-block btn-lg">Cancel</a></div>
 			</div>
 		</div>
         </div>
