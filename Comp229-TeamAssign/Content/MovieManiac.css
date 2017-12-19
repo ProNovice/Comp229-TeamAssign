@@ -35,55 +35,20 @@ body {
         }
 }
 
-
-.page-context {
-    background-color: white;
-    min-height: 500px;
-    padding: 20px;
-}
-
-.subtitle {
-    font-size: 35px;
-
-}
-
-.banner {
-    width:100%;
-}
-
-    .banner img {
-    }
-
-
-.movieList {
-
-}
-.movieTitle {
-        font-weight: bold;
-            font-size: 25px;
-    }
-
-.movieListRow {
-    margin-bottom: 50px;
-}
-
-.movieListTable {
-    margin: 20px;
-    padding: 15px;
-    box-shadow: 5px;
+/*User Registration Page*/
+/* Credit to bootsnipp.com for the css for the color graph */
+.colorgraph {
+    height: 5px;
+    border-top: 0;
+    background: #c4e17f;
     border-radius: 5px;
-    width: 220px;
-    height: 100px;
+    background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 }
-
-.movieListPicture {
-    max-width: 220px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 5px;
-}
-
-.movieListInfo {
-    padding: 20px;
-    font-size: 20px;
+.register {
+    padding: 50px;
+    border-radius: 20px;
+    background-color:whitesmoke;
 }
