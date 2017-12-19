@@ -136,7 +136,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\MovieManiac.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Main.aspx" />
+    <Content Include="MainTracking.aspx" />
     <Content Include="MovieDetail.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -188,6 +188,10 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="MainTracking.aspx.cs">
+      <DependentUpon>MainTracking.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="MovieDetail.aspx.cs">
       <DependentUpon>MovieDetail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
