@@ -95,14 +95,16 @@
                                             <div class="form" role="form" id="login-nav">
                                                 <div class="form-group">
                                                     <label class="sr-only" for="inputUsername">Username</label>
-                                                    <input type="text" class="form-control" id="username" placeholder="Username" required>
+                                                    <asp:Textbox ID="username" runat="server" class="form-control"  placeholder="Username" />
+                                                    <asp:RequiredFieldValidator ID = "usernameRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="InsertValidation" ControlToValidate="username" ForeColor="Red"></asp:RequiredFieldValidator>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="sr-only" for="inputPassword">Password</label>
-                                                    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+                                                    <asp:TextBox ID="password" runat="server" type="password" class="form-control" placeholder="Password" />
+                                                    <asp:RequiredFieldValidator ID = "passwordRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="InsertValidation" ControlToValidate="password" ForeColor="Red"></asp:RequiredFieldValidator>
                                                 </div>
                                                 <div class="form-group">
-                                                    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                                                    <button type="submit" class="btn btn-primary btn-block" onclick="loginBtn_Click">Sign in</button>
                                                 </div>
                                             </div>
                                         </div>
