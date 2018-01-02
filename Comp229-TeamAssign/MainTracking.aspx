@@ -39,6 +39,18 @@
     <div class="container page-context" style="">
         <label class="subtitle">Movie List</label>
         <br />
+        <label>Search By:</label>
+          <asp:DropDownList ID="ddlSearchBy" runat="server" AutoPostBack="True"
+             OnSelectedIndexChanged="ddlSearchBy_SelectedIndexChanged">
+        <asp:ListItem Text="All"></asp:ListItem>
+        <asp:ListItem Text="Title"></asp:ListItem>       
+        <asp:ListItem Text="Genre"></asp:ListItem>
+        <asp:ListItem Text="Director"></asp:ListItem>
+        </asp:DropDownList>
+          <asp:TextBox ID="txtSearch" runat="server"></asp:TextBox>
+            <asp:Button ID="btnSearch" runat="server" Text="Search"
+                onclick="btnSearch_Click" />
+        <br />
         <hr />
         <br />
         <div class="row movieListRow">

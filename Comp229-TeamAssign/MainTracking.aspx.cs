@@ -49,5 +49,25 @@ namespace Comp229_TeamAssign
         {
 
         }
+
+        protected void ddlSearchBy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlSearchBy.SelectedItem.Text == "All")
+            {
+                txtSearch.Text = string.Empty;
+                txtSearch.Enabled = false;
+            }
+            else
+            {
+                txtSearch.Enabled = true;
+                txtSearch.Text = string.Empty;
+                txtSearch.Focus();
+            }
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
