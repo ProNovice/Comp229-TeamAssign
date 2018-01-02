@@ -61,7 +61,6 @@ namespace Comp229_TeamAssign
             {
                 txtSearch.Enabled = true;
                 txtSearch.Text = string.Empty;
-                txtSearch.Focus();
             }
         }
 

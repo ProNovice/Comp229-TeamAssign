@@ -47,12 +47,16 @@
 			
 			<hr class="colorgraph">
 			<div class="row">
-				<div class="col-xs-12 col-md-6"><input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" onclick="submitBtn_Click"></div>
+				<div class="col-xs-12 col-md-6">
+                <asp:Button ID = "registerBtn" runat="server" Text="Register" CssClass="btn btn-primary btn-block btn-lg"  ValidationGroup="InsertValidation" OnClick="submitBtn_Click" />
 				<div class="col-xs-12 col-md-6"><a href="MainTracking.aspx" class="btn btn-danger btn-block btn-lg">Cancel</a></div>
+                <asp:Label ID = "dbErrorMessage" ForeColor="Red" runat="server" />
+
 			</div>
 		</div>
         </div>
     </div>
 </div>
 	</div>
+        </div>
 </asp:Content>
