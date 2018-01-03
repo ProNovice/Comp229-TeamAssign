@@ -117,27 +117,18 @@ namespace Comp229_TeamAssign
         /// </summary>
         private void SwitchLoginButtonVisibility()
         {
-            // swithch visibility upto the login status
-            if (Session["Login"] != null && Session["UserName"] != null && Session["Position"] != null)
+            if (Page.User != null && Page.User.Identity.IsAuthenticated)
             {
-                string username = (string)Session["UserName"];
-                string position = (string)Session["Position"];
-                // check whether Login status is true
-                if ((bool)Session["Login"])
-                {
-                    ulLogin.Visible = false;
-                    ulLogout.Visible = true;
-                    lblUsername.InnerText = username;
+                string username = Page.User.Identity.Name;
 
-                    // adjust visibility up to user position
-                    switch (position)
-                    {
-                        case "Administrator":
-                            btnGoToMovieAddition.Visible = true;
-                            break;
-                        default:
-                            break;
-                    }
+                // swithch visibility upto the login status
+                ulLogin.Visible = false;
+                ulLogout.Visible = true;
+                lblUsername.InnerText = username;
+
+                if (username == "Movie Maniac")
+                {
+                    btnGoToMovieAddition.Visible = true;
                 }
             }
             else

@@ -58,7 +58,7 @@
                     </ul> 
                     <ul id="ulLogout" runat="server" class="nav navbar-nav navbar-right" visible="false">
                         <li><label id="lblUsername" runat="server" class="navbar-text"></label></li>
-                        <li><asp:Button ID="logoutBtn" OnClick="LogoutBtn_Click" runat="server" CssClass="btn" Text="Log Out" /></li>
+                        <li><asp:Button ID="logoutBtn" OnClick="LogoutBtn_Click" runat="server" CssClass="btn btn-primary btn-block" Text="Log Out" /></li>                                            
                     </ul>
                     <ul id="ulLogin" runat="server" class="nav navbar-nav navbar-right">
                         <li>
