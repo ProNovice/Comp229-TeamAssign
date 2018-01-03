@@ -94,13 +94,13 @@ namespace Comp229_TeamAssign {
         protected global::System.Web.UI.WebControls.CompareValidator comparepwd;
         
         /// <summary>
-        /// registerBtn control.
+        /// submitBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button registerBtn;
+        protected global::System.Web.UI.WebControls.Button submitBtn;
         
         /// <summary>
         /// dbErrorMessage control.
