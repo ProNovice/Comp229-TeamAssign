@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -16,48 +17,73 @@ namespace Comp229_TeamAssign
             SwitchLoginButtonVisibility();
         }
 
+
+        /// <summary>
+        /// Try user login
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void LoginBtn_Click(object sender, EventArgs e)
+        {
+            // Check the web.config for the user
+            if (FormsAuthentication.Authenticate(txtUsername.Text, txtPassword.Text))
+            {
+                FormsAuthentication.RedirectFromLoginPage(txtUsername.Text, false);
+            }
+        }
+
+        /// <summary>
+        /// Logout the logged in user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void LogoutBtn_Click(object sender, EventArgs e)
+        {
+            FormsAuthentication.SignOut();
+        }
+
         /// <summary>
         /// Action when LoginBtn is clicked
         /// Check entered username and password if they are matched with Account data in the MovieManiac DB
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void LoginBtn_Click(object sender, EventArgs e)
-        {
-            string username = txtUsername.Text;
-            string inputPassword = txtPassword.Text;
-            string password;
-            string position;
+        //protected void LoginBtn_Click(object sender, EventArgs e)
+        //{
+        //    string username = txtUsername.Text;
+        //    string inputPassword = txtPassword.Text;
+        //    string password = "";
+        //    string position = "";
 
-            using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
-            {
-                conn.Open();
+        //    using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+        //    {
+        //        conn.Open();
 
-                // get password of the account
-                SqlCommand getPassword = new SqlCommand(
-                     "SELECT Password FROM Account WHERE UserName = @username;", conn);
-                getPassword.Parameters.AddWithValue("@username", username);
-                password = getPassword.ExecuteScalar().ToString();
+        //        // get password of the account
+        //        SqlCommand getUserInfo = new SqlCommand(
+        //             "SELECT Password, Position FROM Account WHERE UserName = @username;", conn);
+        //        getUserInfo.Parameters.AddWithValue("@username", username);
+        //        SqlDataReader dr = getUserInfo.ExecuteReader();
+        //        while (dr.Read())
+        //        {
+        //            password = dr["Password"].ToString();
+        //            position = dr["Position"].ToString();
+        //        }
+        //        dr.Close();
 
-                // get position of the account
-                SqlCommand getPosition = new SqlCommand(
-                    "SELECT Position FROM Account WHERE UserName = @username;", conn);
-                getPosition.Parameters.AddWithValue("@username", username);
-                position = getPosition.ExecuteScalar().ToString();
+        //        conn.Close();
+        //    }
 
-                conn.Close();
-            }
-
-            if (inputPassword == password)
-            {
-                LoginComplete(username, position);
-                lblLoginFeedback.InnerText = "";
-            }
-            else
-            {
-                lblLoginFeedback.InnerText = "Username or Password is not matched!";
-            }
-        }
+        //    if (inputPassword == password)
+        //    {
+        //        LoginComplete(username, position);
+        //        lblLoginFeedback.InnerText = "";
+        //    }
+        //    else
+        //    {
+        //        lblLoginFeedback.InnerText = "Username or Password is not matched!";
+        //    }
+        //}
 
         /// <summary>
         /// Action when LogoutBtn is clicked while the status is logged in

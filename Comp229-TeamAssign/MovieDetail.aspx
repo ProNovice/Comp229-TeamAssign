@@ -105,8 +105,6 @@
         <table id="tblWritingReview" runat="server" class="tblReview tblMovieInfo">
             <tr>
                 <td class="col-md-3">
-                    <asp:Label runat="server" ID="lblWritingReviewWriter">User Name</asp:Label></td>
-                <td class="col-md-3">
                     <asp:Label runat="server" ID="lblWritingReviewScore" Text="Score: "></asp:Label><asp:TextBox ID="txtReviewScore" runat="server" type="number" CssClass="txtReviewScore" Text="10"></asp:TextBox></td>
                 <td class="col-md-3">
                     <asp:Button ID="btnWrite" runat="server" CssClass="btn btn-warning float-right" OnClick="WriteReviewBtn_Click" ValidationGroup="writingReview" Text="Write" />
@@ -114,7 +112,6 @@
                 </td>
             </tr>
             <tr>
-                <td></td>
                 <td colspan="2">
                     <asp:TextBox TextMode="MultiLine" runat="server" ID="txtReviewComment" Columns="50"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="txtReviewCommentValidator" runat="server" ValidationGroup="writingReview" ControlToValidate="txtReviewComment" ErrorMessage="This field cannot be empty" ForeColor="Red"></asp:RequiredFieldValidator>
