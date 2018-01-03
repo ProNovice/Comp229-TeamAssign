@@ -76,7 +76,7 @@
                                             <label class="sr-only" for="inputPassword">Password</label>
                                             <asp:TextBox ID="txtPassword" runat="server" type="password" class="form-control" placeholder="Password" />
                                             <asp:RequiredFieldValidator ID="passwordRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="InsertValidation" ControlToValidate="txtPassword" ForeColor="Red"></asp:RequiredFieldValidator>
-                                            <asp:Button ID="loginBtn" runat="server" CssClass="btn btn-primary btn-block" OnClick="LoginBtn_Click">Sign in</button>
+                                            <asp:Button ID="loginBtn" runat="server" CssClass="btn btn-primary btn-block" OnClick="LoginBtn_Click" Text="Sign In" />
                                             <label id="lblLoginFeedback" runat="server"></label>
                                         </div>
                                         <div class="bottom text-center">

@@ -85,11 +85,8 @@ namespace Comp229_TeamAssign
         //    }
         //}
 
-        /// <summary>
-        /// Action when LogoutBtn is clicked while the status is logged in
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
+
         /// <summary>
         /// Complete user login
         /// </summary>
