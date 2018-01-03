@@ -127,6 +127,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\MMBanner.jpg" />
     <Content Include="Assets\Movie_Maniac_Favicon.png" />
     <Content Include="Assets\Movie_Maniac_Logo.png" />
     <Content Include="Assets\Movie_Maniac_Logo_Title_h.png" />

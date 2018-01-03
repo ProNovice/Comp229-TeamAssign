@@ -9,11 +9,15 @@
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                 <li data-target="#myCarousel" data-slide-to="1"></li>
                 <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
             </ol>
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
                 <div class="item active">
+                    <img src="../Assets/MMBanner.jpg" style="width: 100%;" />
+                </div>
+                <div class="item">
                     <img src="http://images6.fanpop.com/image/photos/40500000/Justice-League-2017-Poster-You-Can-t-Save-the-World-Alone-justice-league-movie-40583604-1500-500.jpg" style="width: 100%;" />
                 </div>
                 <div class="item">
@@ -35,6 +39,7 @@
             </a>
         </div>
     </div>
+    <br />
     <div class="container page-context" style="">
         <label class="subtitle">Movie List</label>
         <br />
