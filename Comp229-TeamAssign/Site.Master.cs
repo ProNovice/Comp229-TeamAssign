@@ -90,12 +90,6 @@ namespace Comp229_TeamAssign
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void LogoutBtn_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
         /// <summary>
         /// Complete user login
         /// </summary>
