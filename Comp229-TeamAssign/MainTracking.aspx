@@ -1,7 +1,6 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="MainTracking.aspx.cs" Inherits="Comp229_TeamAssign.MainTracking" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MainTracking.aspx.cs" Inherits="Comp229_TeamAssign.MainTracking" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="banner">
+        <div class="banner">
         <!-- Carousel -->
         <!-- source: https://www.w3schools.com/bootstrap/bootstrap_carousel.asp -->
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -54,7 +53,7 @@
         <hr />
         <br />
         <div class="row movieListRow">
-        <div class="col-md-6">
+            <div class="col-md-4">
                 <table runat="server" cssclass="movieListTable">
                     <tr>
                         <td>
@@ -74,7 +73,7 @@
                         </td>
                     </tr>
                 </table>
-            </div>            <div class="col-md-6">
+            </div>            <div class="col-md-4">
                 <table runat="server" cssclass="movieListTable">
                     <tr>
                         <td>
@@ -94,10 +93,7 @@
                         </td>
                     </tr>
                 </table>
-            </div>
-        </div>
-        <div class="row movieListRow">
-        <div class="col-md-6">
+            </div>            <div class="col-md-4">
                 <table runat="server" cssclass="movieListTable">
                     <tr>
                         <td>
@@ -117,7 +113,9 @@
                         </td>
                     </tr>
                 </table>
-            </div>            <div class="col-md-6">
+            </div>
+        </div><div class="row movieListRow">
+            <div class="col-md-4">
                 <table runat="server" cssclass="movieListTable">
                     <tr>
                         <td>
@@ -137,10 +135,7 @@
                         </td>
                     </tr>
                 </table>
-            </div>
-        </div>
-        <div class="row movieListRow">
-        <div class="col-md-6">
+            </div>            <div class="col-md-4">
                 <table runat="server" cssclass="movieListTable">
                     <tr>
                         <td>
@@ -160,7 +155,7 @@
                         </td>
                     </tr>
                 </table>
-            </div>            <div class="col-md-6">
+            </div>            <div class="col-md-4">
                 <table runat="server" cssclass="movieListTable">
                     <tr>
                         <td>
@@ -181,9 +176,8 @@
                     </tr>
                 </table>
             </div>
-        </div>
-        <div class="row movieListRow">
-        <div class="col-md-6">
+        </div><div class="row movieListRow">
+            <div class="col-md-4">
                 <table runat="server" cssclass="movieListTable">
                     <tr>
                         <td>
@@ -203,7 +197,7 @@
                         </td>
                     </tr>
                 </table>
-            </div>            <div class="col-md-6">
+            </div>            <div class="col-md-4">
                 <table runat="server" cssclass="movieListTable">
                     <tr>
                         <td>
@@ -223,6 +217,26 @@
                         </td>
                     </tr>
                 </table>
+            </div>            <div class="col-md-4">
+                <table runat="server" cssclass="movieListTable">
+                    <tr>
+                        <td>
+                            <a href="https://www.foxmovies.com/movies/the-martian">
+                                <asp:Image CssClass="movieListPicture" ImageUrl="http://media.moviemanager.biz/movies/The-Martian-3D_25895_posterlarge.jpg" runat="server" />
+                            </a>
+                        </td>
+                        <td>
+                            <div class="movieListInfo" runat="server">
+                                <p class="movieTitle">Martion</p>
+                                <p>Genre: SF</p>
+                                <p>Time: 120 min</p>
+                                <p>Score: 5</p>
+                                <p>Status: Owned</p>
+                                <asp:Button ID="Button8" runat="server" CssClass="btn btn-warning" Text="View Detail" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
         <asp:Repeater ID="loanedMovieRepeater" runat="server">
@@ -237,9 +251,8 @@
                                 <p class="movieTitle"><%# Eval("Title") %></p>
                                 <p><%# Eval("Genre") %></p>
                                 <p><%# Eval("Duration") %></p>
-                                <p><%# Eval("Director") %></p>
-                                <p><%# Eval("Company") %></p>
-                                <p><%# Eval("ReviewScore") %></p>
+                                <p><%# Eval("Review") %></p>
+                                <p><%# Eval("Score") %></p>
                                 <p><%# Eval("Status") %></p>
                                 <asp:Button ID="btnViewDetail" runat="server" CssClass="btn btn-warning" Text="View Detail" />
                             </div>
@@ -261,9 +274,8 @@
                                 <p class="movieTitle"><%# Eval("Title") %></p>
                                 <p><%# Eval("Genre") %></p>
                                 <p><%# Eval("Duration") %></p>
-                                <p><%# Eval("Director") %></p>
-                                <p><%# Eval("Company") %></p>
-                                <p><%# Eval("ReviewScore") %></p>
+                                <p><%# Eval("Review") %></p>
+                                <p><%# Eval("Score") %></p>
                                 <p><%# Eval("Status") %></p>
                                 <asp:Button ID="btnViewDetail" runat="server" CssClass="btn btn-warning" Text="View Detail" />
                             </div>
