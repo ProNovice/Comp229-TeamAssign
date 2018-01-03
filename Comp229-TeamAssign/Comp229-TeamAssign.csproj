@@ -186,12 +186,14 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="MainTracking.aspx.cs">
       <DependentUpon>MainTracking.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Movie.cs" />
     <Compile Include="MovieDetail.aspx.cs">
       <DependentUpon>MovieDetail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -2,8 +2,7 @@
 
 /*Master Page*/
 body {
-   
- }
+}
 
 #login-dp {
     min-width: 250px;
@@ -47,67 +46,116 @@ body {
     background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
     background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 }
+
 .register {
     padding: 50px;
     border-radius: 20px;
-    background-color:whitesmoke;
+    background-color: whitesmoke;
 }
+
 page-context {
-      background-color: white;
-      min-height: 500px;
-      padding: 20px;
-     
+    background-color: white;
+    min-height: 500px;
+    padding: 20px;
+    font-size: 25px;
 }
 
-    .subtitle {
-      font-size: 35px;
-       
+.subtitle {
+    font-size: 35px;
 }
 
-    .banner {
-      width:100%;
-     
+.banner {
+    width: 100%;
 }
 
-        .banner img {
-         
+    .banner img {
     }
 
-      .movieList {
-       
+.movieList {
 }
 
-  .movieTitle {
-      font-weight: bold;
-      font-size: 25px;
-     
+.movieTitle {
+    font-weight: bold;
+    font-size: 25px;
 }
 
-    .movieListRow {
-      margin-bottom: 50px;
-     
+.movieListRow {
+    margin-bottom: 50px;
 }
 
-    .movieListTable {
-      margin: 20px;
-      padding: 15px;
-      box-shadow: 5px;
-      border-radius: 5px;
-      width: 220px;
-      height: 100px;
-     
+.movieListTable {
+    margin: 20px;
+    padding: 15px;
+    box-shadow: 5px;
+    border-radius: 5px;
+    width: 220px;
+    height: 100px;
 }
 
-    .movieListPicture {
-      max-width: 220px;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: 5px;
-     
+.movieListPicture {
+    max-width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 5px;
 }
 
-    .movieListInfo {
-      padding: 20px;
-      font-size: 20px;
-     
-} 
+.movieListInfo {
+    padding: 20px;
+    font-size: 20px;
+}
+
+.textArea {
+    width: 100%;
+}
+}
+/* Movie Detail */
+
+.tblMovieInfo {
+    font-size: 25px;
+}
+
+.tdPicture {
+    width: 600px;
+    text-align: center;
+}
+
+.movieImage {
+    width:300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lblMovieInfoIndex {
+    width: 150px;
+}
+
+.lblMovieInfo {
+    width: 150px;
+}
+
+.float-right {
+    float: right;
+}
+
+.txtDescription {
+    padding: 40px;
+}
+
+
+/* Review */
+
+.tblReview {
+    width: 100%;
+    padding: 40px;
+    font-size: 25px;
+    margin-right: 40px;
+}
+
+.txtReviewScore {
+    width: 50px;
+}
+
+.txtReviewText {
+    width: 100%;
+    height: 150px;
+}

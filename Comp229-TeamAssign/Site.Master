@@ -42,56 +42,42 @@
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
                 <%--Site Scripts--%>
-                 <asp:ScriptReference Path="~/Scripts/MovieManiac.js" />
+                <asp:ScriptReference Path="~/Scripts/MovieManiac.js" />
             </Scripts>
         </asp:ScriptManager>
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
         <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="active"><a runat="server" href="~/MainTracking.aspx">Movie Maniac</a></li>
                         <li><a runat="server" href="~/MovieDetail.aspx">Movie Details </a></li>
-                        
-                        
+                        <li><a id="btnGoToMovieAddition" runat="server" href="~/MovieAddition.aspx" visible="false" >Movie Addition</a></li>
+                    </ul> 
+                    <ul id="ulLogout" runat="server" class="nav navbar-nav navbar-right" visible="false">
+                        <li><label id="lblUsername" runat="server" class="navbar-text"></label></li>
+                        <li><asp:Button ID="logoutBtn" runat="server" CssClass="btn" Text="Log Out" /></li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul id="ulLogin" runat="server" class="nav navbar-nav navbar-right">
                         <li>
                             <p class="navbar-text">Already have an account?</p>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a><%--some function is needed to add here--%>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Log in</b> <span class="caret"></span></a><%--some function is needed to add here--%>
                             <ul id="login-dp" class="dropdown-menu">
                                 <li>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form" role="form" id="login-nav">
-                                                <div class="form-group">
-                                                    <label class="sr-only" for="inputUsername">Username</label>
-                                                    <asp:Textbox ID="username" runat="server" class="form-control"  placeholder="Username" />
-                                                    <asp:RequiredFieldValidator ID = "usernameRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="InsertValidation" ControlToValidate="username" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="sr-only" for="inputPassword">Password</label>
-                                                    <asp:TextBox ID="password" runat="server" type="password" class="form-control" placeholder="Password" />
-                                                    <asp:RequiredFieldValidator ID = "passwordRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="InsertValidation" ControlToValidate="password" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                </div>
-                                                <div class="form-group">
-                                                    <button type="submit" class="btn btn-primary btn-block" onclick="loginBtn_Click">Sign in</button>
-                                                </div>
-                                            </div>
+                                            <label class="sr-only" for="inputUsername">Username</label>
+                                            <asp:TextBox ID="txtUsername" runat="server" class="form-control" placeholder="Username" />
+                                            <asp:RequiredFieldValidator ID="usernameRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="InsertValidation" ControlToValidate="txtUsername" ForeColor="Red"></asp:RequiredFieldValidator>
+                                            <label class="sr-only" for="inputPassword">Password</label>
+                                            <asp:TextBox ID="txtPassword" runat="server" type="password" class="form-control" placeholder="Password" />
+                                            <asp:RequiredFieldValidator ID="passwordRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="InsertValidation" ControlToValidate="txtPassword" ForeColor="Red"></asp:RequiredFieldValidator>
+                                            <button type="submit" class="btn btn-primary btn-block" onclick="loginBtn_Click">Sign in</button>
+                                            <label id="lblLoginFeedback" runat="server"></label>
                                         </div>
                                         <div class="bottom text-center">
                                             Don't have an account ? <a runat="server" href="~/UserRegistration.aspx"><b>Sign Up</b></a>
