@@ -40,6 +40,7 @@ namespace Comp229_TeamAssign
         protected void LogoutBtn_Click(object sender, EventArgs e)
         {
             FormsAuthentication.SignOut();
+            FormsAuthentication.RedirectToLoginPage();
         }
 
         /// <summary>

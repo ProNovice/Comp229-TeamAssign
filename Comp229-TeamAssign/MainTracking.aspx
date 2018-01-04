@@ -57,193 +57,7 @@
         <br />
         <hr />
         <br />
-        <div class="row movieListRow">
-            <div class="col-md-4">
-                <table runat="server" cssclass="movieListTable">
-                    <tr>
-                        <td>
-                            <a href="https://www.foxmovies.com/movies/the-martian">
-                                <asp:Image CssClass="movieListPicture" ImageUrl="http://media.moviemanager.biz/movies/The-Martian-3D_25895_posterlarge.jpg" runat="server" />
-                            </a>
-                        </td>
-                        <td>
-                            <div class="movieListInfo" runat="server">
-                                <p class="movieTitle">Martion</p>
-                                <p>Genre: SF</p>
-                                <p>Time: 120 min</p>
-                                <p>Score: 5</p>
-                                <p>Status: Owned</p>
-                                <asp:Button ID="btnViewDetail" runat="server" CssClass="btn btn-warning" Text="View Detail" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>            <div class="col-md-4">
-                <table runat="server" cssclass="movieListTable">
-                    <tr>
-                        <td>
-                            <a href="https://www.foxmovies.com/movies/the-martian">
-                                <asp:Image CssClass="movieListPicture" ImageUrl="http://media.moviemanager.biz/movies/The-Martian-3D_25895_posterlarge.jpg" runat="server" />
-                            </a>
-                        </td>
-                        <td>
-                            <div class="movieListInfo" runat="server">
-                                <p class="movieTitle">Martion</p>
-                                <p>Genre: SF</p>
-                                <p>Time: 120 min</p>
-                                <p>Score: 5</p>
-                                <p>Status: Owned</p>
-                                <asp:Button ID="Button1" runat="server" CssClass="btn btn-warning" Text="View Detail" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>            <div class="col-md-4">
-                <table runat="server" cssclass="movieListTable">
-                    <tr>
-                        <td>
-                            <a href="https://www.foxmovies.com/movies/the-martian">
-                                <asp:Image CssClass="movieListPicture" ImageUrl="http://media.moviemanager.biz/movies/The-Martian-3D_25895_posterlarge.jpg" runat="server" />
-                            </a>
-                        </td>
-                        <td>
-                            <div class="movieListInfo" runat="server">
-                                <p class="movieTitle">Martion</p>
-                                <p>Genre: SF</p>
-                                <p>Time: 120 min</p>
-                                <p>Score: 5</p>
-                                <p>Status: Owned</p>
-                                <asp:Button ID="Button2" runat="server" CssClass="btn btn-warning" Text="View Detail" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div><div class="row movieListRow">
-            <div class="col-md-4">
-                <table runat="server" cssclass="movieListTable">
-                    <tr>
-                        <td>
-                            <a href="https://www.foxmovies.com/movies/the-martian">
-                                <asp:Image CssClass="movieListPicture" ImageUrl="http://media.moviemanager.biz/movies/The-Martian-3D_25895_posterlarge.jpg" runat="server" />
-                            </a>
-                        </td>
-                        <td>
-                            <div class="movieListInfo" runat="server">
-                                <p class="movieTitle">Martion</p>
-                                <p>Genre: SF</p>
-                                <p>Time: 120 min</p>
-                                <p>Score: 5</p>
-                                <p>Status: Owned</p>
-                                <asp:Button ID="Button3" runat="server" CssClass="btn btn-warning" Text="View Detail" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>            <div class="col-md-4">
-                <table runat="server" cssclass="movieListTable">
-                    <tr>
-                        <td>
-                            <a href="https://www.foxmovies.com/movies/the-martian">
-                                <asp:Image CssClass="movieListPicture" ImageUrl="http://media.moviemanager.biz/movies/The-Martian-3D_25895_posterlarge.jpg" runat="server" />
-                            </a>
-                        </td>
-                        <td>
-                            <div class="movieListInfo" runat="server">
-                                <p class="movieTitle">Martion</p>
-                                <p>Genre: SF</p>
-                                <p>Time: 120 min</p>
-                                <p>Score: 5</p>
-                                <p>Status: Owned</p>
-                                <asp:Button ID="Button4" runat="server" CssClass="btn btn-warning" Text="View Detail" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>            <div class="col-md-4">
-                <table runat="server" cssclass="movieListTable">
-                    <tr>
-                        <td>
-                            <a href="https://www.foxmovies.com/movies/the-martian">
-                                <asp:Image CssClass="movieListPicture" ImageUrl="http://media.moviemanager.biz/movies/The-Martian-3D_25895_posterlarge.jpg" runat="server" />
-                            </a>
-                        </td>
-                        <td>
-                            <div class="movieListInfo" runat="server">
-                                <p class="movieTitle">Martion</p>
-                                <p>Genre: SF</p>
-                                <p>Time: 120 min</p>
-                                <p>Score: 5</p>
-                                <p>Status: Owned</p>
-                                <asp:Button ID="Button5" runat="server" CssClass="btn btn-warning" Text="View Detail" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div><div class="row movieListRow">
-            <div class="col-md-4">
-                <table runat="server" cssclass="movieListTable">
-                    <tr>
-                        <td>
-                            <a href="https://www.foxmovies.com/movies/the-martian">
-                                <asp:Image CssClass="movieListPicture" ImageUrl="http://media.moviemanager.biz/movies/The-Martian-3D_25895_posterlarge.jpg" runat="server" />
-                            </a>
-                        </td>
-                        <td>
-                            <div class="movieListInfo" runat="server">
-                                <p class="movieTitle">Martion</p>
-                                <p>Genre: SF</p>
-                                <p>Time: 120 min</p>
-                                <p>Score: 5</p>
-                                <p>Status: Owned</p>
-                                <asp:Button ID="Button6" runat="server" CssClass="btn btn-warning" Text="View Detail" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>            <div class="col-md-4">
-                <table runat="server" cssclass="movieListTable">
-                    <tr>
-                        <td>
-                            <a href="https://www.foxmovies.com/movies/the-martian">
-                                <asp:Image CssClass="movieListPicture" ImageUrl="http://media.moviemanager.biz/movies/The-Martian-3D_25895_posterlarge.jpg" runat="server" />
-                            </a>
-                        </td>
-                        <td>
-                            <div class="movieListInfo" runat="server">
-                                <p class="movieTitle">Martion</p>
-                                <p>Genre: SF</p>
-                                <p>Time: 120 min</p>
-                                <p>Score: 5</p>
-                                <p>Status: Owned</p>
-                                <asp:Button ID="Button7" runat="server" CssClass="btn btn-warning" Text="View Detail" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>            <div class="col-md-4">
-                <table runat="server" cssclass="movieListTable">
-                    <tr>
-                        <td>
-                            <a href="https://www.foxmovies.com/movies/the-martian">
-                                <asp:Image CssClass="movieListPicture" ImageUrl="http://media.moviemanager.biz/movies/The-Martian-3D_25895_posterlarge.jpg" runat="server" />
-                            </a>
-                        </td>
-                        <td>
-                            <div class="movieListInfo" runat="server">
-                                <p class="movieTitle">Martion</p>
-                                <p>Genre: SF</p>
-                                <p>Time: 120 min</p>
-                                <p>Score: 5</p>
-                                <p>Status: Owned</p>
-                                <asp:Button ID="Button8" runat="server" CssClass="btn btn-warning" Text="View Detail" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+
         <asp:Repeater ID="loanedMovieRepeater" runat="server">
             <ItemTemplate>
                 <asp:Table runat="server" ID="movieListTable" CssClass="container col-md-3">
@@ -267,7 +81,7 @@
             </ItemTemplate>
         </asp:Repeater>
         <hr />
-        <asp:Repeater ID="movieRepeater" runat="server">
+        <asp:Repeater ID="movieRepeater" runat="server" OnItemCommand="movieList_ItemCommand">
             <ItemTemplate>
                 <asp:Table runat="server" ID="movieListTable" CssClass="container col-md-3">
                     <asp:TableRow>
@@ -276,18 +90,14 @@
                         </asp:TableCell>
                         <asp:TableCell>
                             <div id="movieListInfo" runat="server">
-                                <p class="movieTitle"><%# Eval("Title") %></p>
+                                <p class="movieTitle">
+                                    <asp:LinkButton ID="movieTitle" runat="server"
+                                    Text=' <%#Eval("Title")%>'
+                                 CommandName="MoreDetail"
+                                 CommandArgument='<%#Eval("MovieID")%>' />
                                 <p><%# Eval("Genre") %></p>
                                 <p><%# Eval("Duration") %></p>
-                                <p><%# Eval("Review") %></p>
-                                <p><%# Eval("Score") %></p>
+                                <p><%# Eval("ReviewScore") %></p>
                                 <p><%# Eval("Status") %></p>
-                                <asp:Button ID="btnViewDetail" runat="server" CssClass="btn btn-warning" Text="View Detail" />
                             </div>
-                        </asp:TableCell>
-                    </asp:TableRow>
-                </asp:Table>
-            </ItemTemplate>
-        </asp:Repeater>
-    </div>
-</asp:Content>
+                        </asp:TableCell></asp:TableRow></asp:Table></ItemTemplate></asp:Repeater></div></asp:Content>
