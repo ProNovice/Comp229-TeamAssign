@@ -76,13 +76,13 @@ namespace Comp229_TeamAssign {
         protected global::System.Web.UI.WebControls.TextBox txtCompany;
         
         /// <summary>
-        /// txtPublishedDate control.
+        /// inputPublishedDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPublishedDate;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl inputPublishedDate;
         
         /// <summary>
         /// txtDuration control.
@@ -103,13 +103,13 @@ namespace Comp229_TeamAssign {
         protected global::System.Web.UI.WebControls.TextBox txtOfficialLink;
         
         /// <summary>
-        /// txtReviewScore control.
+        /// txtMovieStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtReviewScore;
+        protected global::System.Web.UI.WebControls.TextBox txtMovieStatus;
         
         /// <summary>
         /// txtDescription control.

@@ -35,8 +35,7 @@ namespace Comp229_TeamAssign
         /// <param name="e"></param>
         protected void PreviewImageBtn_Click(object sender, EventArgs e)
         {
-            SaveMovieSession();
-            LoadMovieSession();
+            movieImage.Src = txtImageUrl.Text;
         }
 
         /// <summary>
@@ -60,11 +59,12 @@ namespace Comp229_TeamAssign
             movie.Genre = txtGenre.Text;
             movie.Director = txtDirector.Text;
             movie.Company = txtCompany.Text;
-            movie.PublishedDate = txtPublishedDate.Text;
+            movie.PublishedDate = inputPublishedDate.Value;
             movie.Duration = Convert.ToInt32(txtDuration.Text);
             movie.OfficialLink = txtOfficialLink.Text;
             movie.Description = txtDescription.Text;
             movie.PictureUrl = txtImageUrl.Text;
+            movie.Status = txtMovieStatus.Text;
             Session["NewMovie"] = movie;
         }
 
@@ -81,7 +81,7 @@ namespace Comp229_TeamAssign
                 txtGenre.Text = movie.Genre;
                 txtDirector.Text = movie.Director;
                 txtCompany.Text = movie.Company;
-                txtPublishedDate.Text = movie.PublishedDate;
+                inputPublishedDate.Value = movie.PublishedDate;
                 txtDuration.Text = movie.Duration.ToString();
                 txtOfficialLink.Text = movie.OfficialLink;
                 txtDescription.Text = movie.Description;
@@ -110,23 +110,30 @@ namespace Comp229_TeamAssign
                     {
                         conn.Open();
 
+                        int index;
+                        // get index
+                        SqlCommand getLastIndex = new SqlCommand(
+                            "SELECT MAX(MovieID) FROM Movie;", conn);
+                        index = (int)getLastIndex.ExecuteScalar() + 1;
+
                         // insert movie
                         SqlCommand insertMovie = new SqlCommand(
-                             "INSERT INTO Movie (Title, Genre, Director, Company, PublishedDate, Duration, " +
+                             "INSERT INTO Movie (MovieID, Title, Genre, Director, Company, PublishedDate, Duration, " +
                              "OfficialLink, Description, ReviewScore, Status, PostedDate, PictureUrl) " +
-                             "VALUES (@Title, @Genre, @Director, @Company, @PublishedDate, @Duration, " +
+                             "VALUES (@MovieID, @Title, @Genre, @Director, @Company, @PublishedDate, @Duration, " +
                              "@OfficialLink, @Description, @ReviewScore, @Status, @PostedDate, @PictureUrl);", conn);
+                        insertMovie.Parameters.AddWithValue("@MovieID", index);
                         insertMovie.Parameters.AddWithValue("@Title", movie.Title);
                         insertMovie.Parameters.AddWithValue("@Genre", movie.Genre);
                         insertMovie.Parameters.AddWithValue("@Director", movie.Director);
                         insertMovie.Parameters.AddWithValue("@Company", movie.Company);
-                        insertMovie.Parameters.AddWithValue("@PublishedDate", movie.PublishedDate);
+                        insertMovie.Parameters.AddWithValue("@PublishedDate", inputPublishedDate.Value);
                         insertMovie.Parameters.AddWithValue("@Duration", movie.Duration);
                         insertMovie.Parameters.AddWithValue("@OfficialLink", movie.OfficialLink);
                         insertMovie.Parameters.AddWithValue("@Description", movie.Description);
                         insertMovie.Parameters.AddWithValue("@ReviewScore", movie.ReviewScore);
                         insertMovie.Parameters.AddWithValue("@Status", movie.Status);
-                        insertMovie.Parameters.AddWithValue("@PostedDate", movie.PostedDate);
+                        insertMovie.Parameters.AddWithValue("@PostedDate", DateTime.Today);
                         insertMovie.Parameters.AddWithValue("@PictureUrl", movie.PictureUrl);
 
                         insertMovie.ExecuteNonQuery();

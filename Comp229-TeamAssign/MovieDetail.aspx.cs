@@ -627,7 +627,7 @@ namespace Comp229_TeamAssign
                     {
                         if (movieStatus == "Owned")
                             status = "Available";
-                        else if(!string.IsNullOrEmpty(movieStatus))
+                        else if (!string.IsNullOrEmpty(movieStatus))
                             status = movieStatus;
                     }
 
@@ -720,7 +720,8 @@ namespace Comp229_TeamAssign
                     string count = getCount.ExecuteScalar().ToString();
 
                     // because of cast error, the casts of variables(sum, count) are string type
-                    score = Math.Round(Convert.ToDouble(sum) / Convert.ToDouble(count), 2);
+                    if (!string.IsNullOrEmpty(sum) && !string.IsNullOrEmpty(count))
+                        score = Math.Round(Convert.ToDouble(sum) / Convert.ToDouble(count), 2);
 
                     // update movie score in movie db
                     SqlCommand updateMovieScore = new SqlCommand(

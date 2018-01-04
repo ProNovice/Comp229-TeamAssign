@@ -40,8 +40,8 @@
                     </p>
                     <p>
                         <label class="lblMovieInfoIndex">Published Date: </label>
-                        <asp:TextBox ID="txtPublishedDate" runat="server" CssClass="lblMovieInfo" OnTextChanged="MovieInfo_Changed"></asp:TextBox>
-                        <asp:RequiredFieldValidator ValidationGroup="newMovie" runat="server" ControlToValidate="txtPublishedDate" ErrorMessage="This field cannot be empty." ForeColor="Red"></asp:RequiredFieldValidator>
+                        <input ID="inputPublishedDate" type="date" runat="server" CssClass="lblMovieInfo" OnTextChanged="MovieInfo_Changed" />
+                        <asp:RequiredFieldValidator ValidationGroup="newMovie" runat="server" ControlToValidate="inputPublishedDate" ErrorMessage="This field cannot be empty." ForeColor="Red"></asp:RequiredFieldValidator>
                     </p>
                     <p>
                         <label class="lblMovieInfoIndex">Duration: </label>
@@ -54,9 +54,9 @@
                         <asp:RequiredFieldValidator ValidationGroup="newMovie" runat="server" ControlToValidate="txtOfficialLink" ErrorMessage="This field cannot be empty." ForeColor="Red"></asp:RequiredFieldValidator>
                     </p>
                     <p>
-                        <label class="lblMovieInfoIndex">Review Score: </label>
-                        <asp:TextBox ID="txtReviewScore" runat="server" CssClass="lblMovieInfo" OnTextChanged="MovieInfo_Changed"></asp:TextBox>
-                        <asp:RequiredFieldValidator ValidationGroup="newMovie" runat="server" ControlToValidate="txtReviewScore" ErrorMessage="This field cannot be empty." ForeColor="Red"></asp:RequiredFieldValidator>
+                        <label class="lblMovieInfoIndex">Status: </label>
+                        <asp:TextBox ID="txtMovieStatus" runat="server" CssClass="lblMovieInfo" OnTextChanged="MovieInfo_Changed"></asp:TextBox>
+                        <asp:RequiredFieldValidator ValidationGroup="newMovie" runat="server" ControlToValidate="txtMovieStatus" ErrorMessage="This field cannot be empty." ForeColor="Red"></asp:RequiredFieldValidator>
                     </p>
                 </td>
             </tr>
