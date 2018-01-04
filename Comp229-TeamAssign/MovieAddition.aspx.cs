@@ -95,44 +95,46 @@ namespace Comp229_TeamAssign
         /// </summary>
         private void AddMovie()
         {
-            SaveMovieSession();
-            if (Session["NewMovie"] != null)
+            if (Page.User.Identity.Name == "Movie Maniac")
             {
-                Movie movie = new Movie();
-                movie = Session["NewMovie"] as Movie;
-
-                movie.PostedDate = DateTime.Today.ToString("YYYY-MM-DD");
-
-                // using SqlConnection from Web.config
-                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                SaveMovieSession();
+                if (Session["NewMovie"] != null)
                 {
-                    conn.Open();
+                    Movie movie = new Movie();
+                    movie = Session["NewMovie"] as Movie;
 
-                    // insert movie
-                    SqlCommand insertMovie = new SqlCommand(
-                         "INSERT INTO Movie (Title, Genre, Director, Company, PublishedDate, Duration, " +
-                         "OfficialLink, Description, ReviewScore, Status, PostedDate, PictureUrl) " +
-                         "VALUES (@Title, @Genre, @Director, @Company, @PublishedDate, @Duration, " +
-                         "@OfficialLink, @Description, @ReviewScore, @Status, @PostedDate, @PictureUrl);", conn);
-                    insertMovie.Parameters.AddWithValue("@Title", movie.Title);
-                    insertMovie.Parameters.AddWithValue("@Genre", movie.Genre);
-                    insertMovie.Parameters.AddWithValue("@Director", movie.Director);
-                    insertMovie.Parameters.AddWithValue("@Company", movie.Company);
-                    insertMovie.Parameters.AddWithValue("@PublishedDate", movie.PublishedDate);
-                    insertMovie.Parameters.AddWithValue("@Duration", movie.Duration);
-                    insertMovie.Parameters.AddWithValue("@OfficialLink", movie.OfficialLink);
-                    insertMovie.Parameters.AddWithValue("@Description", movie.Description);
-                    insertMovie.Parameters.AddWithValue("@ReviewScore", movie.ReviewScore);
-                    insertMovie.Parameters.AddWithValue("@Status", movie.Status);
-                    insertMovie.Parameters.AddWithValue("@PostedDate", movie.PostedDate);
-                    insertMovie.Parameters.AddWithValue("@PictureUrl", movie.PictureUrl);
+                    movie.PostedDate = DateTime.Today.ToString("YYYY-MM-DD");
 
-                    insertMovie.ExecuteNonQuery();
+                    // using SqlConnection from Web.config
+                    using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                    {
+                        conn.Open();
 
-                    conn.Close();
+                        // insert movie
+                        SqlCommand insertMovie = new SqlCommand(
+                             "INSERT INTO Movie (Title, Genre, Director, Company, PublishedDate, Duration, " +
+                             "OfficialLink, Description, ReviewScore, Status, PostedDate, PictureUrl) " +
+                             "VALUES (@Title, @Genre, @Director, @Company, @PublishedDate, @Duration, " +
+                             "@OfficialLink, @Description, @ReviewScore, @Status, @PostedDate, @PictureUrl);", conn);
+                        insertMovie.Parameters.AddWithValue("@Title", movie.Title);
+                        insertMovie.Parameters.AddWithValue("@Genre", movie.Genre);
+                        insertMovie.Parameters.AddWithValue("@Director", movie.Director);
+                        insertMovie.Parameters.AddWithValue("@Company", movie.Company);
+                        insertMovie.Parameters.AddWithValue("@PublishedDate", movie.PublishedDate);
+                        insertMovie.Parameters.AddWithValue("@Duration", movie.Duration);
+                        insertMovie.Parameters.AddWithValue("@OfficialLink", movie.OfficialLink);
+                        insertMovie.Parameters.AddWithValue("@Description", movie.Description);
+                        insertMovie.Parameters.AddWithValue("@ReviewScore", movie.ReviewScore);
+                        insertMovie.Parameters.AddWithValue("@Status", movie.Status);
+                        insertMovie.Parameters.AddWithValue("@PostedDate", movie.PostedDate);
+                        insertMovie.Parameters.AddWithValue("@PictureUrl", movie.PictureUrl);
+
+                        insertMovie.ExecuteNonQuery();
+
+                        conn.Close();
+                    }
                 }
             }
         }
-
     }
 }

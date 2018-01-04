@@ -49,7 +49,7 @@
                         <asp:RequiredFieldValidator ValidationGroup="newMovie" runat="server" ControlToValidate="txtDuration" ErrorMessage="This field cannot be empty." ForeColor="Red"></asp:RequiredFieldValidator>
                     </p>
                     <p>
-                        <label class="lblMovieOfficialLink">Official Link: </label>
+                        <label class="lblMovieInfoIndex">Official Link: </label>
                         <asp:TextBox ID="txtOfficialLink" runat="server" CssClass="lblMovieInfo" OnTextChanged="MovieInfo_Changed"></asp:TextBox>
                         <asp:RequiredFieldValidator ValidationGroup="newMovie" runat="server" ControlToValidate="txtOfficialLink" ErrorMessage="This field cannot be empty." ForeColor="Red"></asp:RequiredFieldValidator>
                     </p>

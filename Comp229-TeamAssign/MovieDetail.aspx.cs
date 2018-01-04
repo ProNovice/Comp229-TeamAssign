@@ -334,7 +334,7 @@ namespace Comp229_TeamAssign
         /// </summary>
         private void RentMovie()
         {
-            if (Session["MovieID"] != null && Session["UserName"] != null)
+            if (Session["MovieID"] != null && Page.User.Identity.Name != null)
             {
                 using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                 {
@@ -360,7 +360,7 @@ namespace Comp229_TeamAssign
         /// </summary>
         private void ReturnMovie()
         {
-            if (Session["MovieID"] != null && Session["UserName"] != null)
+            if (Session["MovieID"] != null && Page.User.Identity.Name != null)
             {
                 using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                 {
@@ -408,7 +408,7 @@ namespace Comp229_TeamAssign
         /// </summary>
         private void UnhidMovie()
         {
-            if (Session["MovieID"] != null && Session["UserName"] != null)
+            if (Session["MovieID"] != null && Page.User.Identity.Name != null)
             {
                 using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                 {
@@ -438,7 +438,7 @@ namespace Comp229_TeamAssign
         private string GetMovieStatus()
         {
             string status = null;
-            if (Session["MovieID"] != null && Session["UserName"] != null)
+            if (Session["MovieID"] != null && Page.User.Identity.Name != null)
             {
                 using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                 {
@@ -468,9 +468,9 @@ namespace Comp229_TeamAssign
         {
             string memberID = null;
 
-            if (Session["UserName"] != null)
+            if (Page.User.Identity.IsAuthenticated)
             {
-                string username = Session["UserName"].ToString();
+                string username = Page.User.Identity.Name;
 
                 using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                 {
@@ -483,6 +483,7 @@ namespace Comp229_TeamAssign
 
                     conn.Close();
                 }
+
             }
             return memberID;
         }
