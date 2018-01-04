@@ -76,12 +76,12 @@
                         <td class="col-md-3">
                             <asp:Label runat="server" ID="lblReviewWriter" Text='<%# Eval("UserName") %>'></asp:Label></td>
                         <td class="col-md-3">
-                            <asp:Label runat="server" ID="lblReviewDate" Text='<%# Eval("revDate") %>'></asp:Label></td>
+                            <asp:Label runat="server" ID="lblReviewDate" Text='<%# Eval("Date") %>'></asp:Label></td>
                         <td class="col-md-3">
                             <label>Score: </label>
                             <asp:Label runat="server" ID="lblReviewScore" Text='<%# Eval("Score") %>'></asp:Label>
                             <asp:TextBox runat="server" ID="txtEditReviewScore" Text='<%# Eval("Score") %>' type="number" Visible="false"></asp:TextBox>
-                            <asp:RequiredFieldValidator runat="server" ID="editReviewScoreValidator" ControlToValidate="txtEditReviewTest" ValidationGroup="editReview" ErrorMessage="This field cannot be empty" ForeColor="Red"></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator runat="server" ID="editReviewScoreValidator" ControlToValidate="txtEditReviewText" ValidationGroup="editReview" ErrorMessage="This field cannot be empty" ForeColor="Red"></asp:RequiredFieldValidator>
                         </td>
                         <td class="col-md-3">
                             <asp:Button ID="btnEdit" OnClick="EditReviewBtn_Click" CommandName="editReview" CommandArgument='<%# Eval("ReviewID") %>' runat="server" CssClass="btn btn-warning float-right" ValidationGroup="editReview" Text="Edit" />

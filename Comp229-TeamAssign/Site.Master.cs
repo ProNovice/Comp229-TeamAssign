@@ -44,76 +44,6 @@ namespace Comp229_TeamAssign
         }
 
         /// <summary>
-        /// Action when LoginBtn is clicked
-        /// Check entered username and password if they are matched with Account data in the MovieManiac DB
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //protected void LoginBtn_Click(object sender, EventArgs e)
-        //{
-        //    string username = txtUsername.Text;
-        //    string inputPassword = txtPassword.Text;
-        //    string password = "";
-        //    string position = "";
-
-        //    using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
-        //    {
-        //        conn.Open();
-
-        //        // get password of the account
-        //        SqlCommand getUserInfo = new SqlCommand(
-        //             "SELECT Password, Position FROM Account WHERE UserName = @username;", conn);
-        //        getUserInfo.Parameters.AddWithValue("@username", username);
-        //        SqlDataReader dr = getUserInfo.ExecuteReader();
-        //        while (dr.Read())
-        //        {
-        //            password = dr["Password"].ToString();
-        //            position = dr["Position"].ToString();
-        //        }
-        //        dr.Close();
-
-        //        conn.Close();
-        //    }
-
-        //    if (inputPassword == password)
-        //    {
-        //        LoginComplete(username, position);
-        //        lblLoginFeedback.InnerText = "";
-        //    }
-        //    else
-        //    {
-        //        lblLoginFeedback.InnerText = "Username or Password is not matched!";
-        //    }
-        //}
-
-
-
-        /// <summary>
-        /// Complete user login
-        /// </summary>
-        /// <param name="username"></param>
-        private void LoginComplete(string username, string position)
-        {
-            Session["UserName"] = username;
-            Session["Login"] = true;
-            Session["Position"] = position;
-        }
-
-        /// <summary>
-        /// Logout the account which is currently logged in
-        /// </summary>
-        private void Logout()
-        {
-            if (Session["UserName"] != null)
-            {
-                string username = Session["UserName"].ToString();
-            }
-
-            // remove all session to logout
-            Session.RemoveAll();
-        }
-
-        /// <summary>
         /// Set visibility upto login status and user position
         /// </summary>
         private void SwitchLoginButtonVisibility()
@@ -125,7 +55,7 @@ namespace Comp229_TeamAssign
                 // swithch visibility upto the login status
                 ulLogin.Visible = false;
                 ulLogout.Visible = true;
-                lblUsername.InnerText = username;
+                lblUsername.InnerText = "Welcome, " + username;
 
                 if (username == "Movie Maniac")
                 {

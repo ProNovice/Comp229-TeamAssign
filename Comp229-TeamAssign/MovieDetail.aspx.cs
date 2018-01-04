@@ -15,10 +15,19 @@ namespace Comp229_TeamAssign
         {
             if (!IsPostBack)
             {
-                Session["MovieID"] = 2001;
-                LoadMovieDetail();
+                LoadPage();
             }
         }
+
+        /// <summary>
+        /// Method package for loading movie detail and reviews at once
+        /// </summary>
+        private void LoadPage()
+        {
+            LoadMovieDetail();
+            LoadReview();
+        }
+
         #region Related Movie
         /// <summary>
         /// Action of Rent
@@ -72,7 +81,7 @@ namespace Comp229_TeamAssign
         {
             // only allowed when user is logged in
             // but in default, writing review form is hidden if user is not logged in.
-            if (checkLoginStatus())
+            if (CheckLoginStatus())
             {
                 if (Session["MovieID"] != null)
                 {
@@ -101,7 +110,7 @@ namespace Comp229_TeamAssign
 
                         conn.Close();
                     }
-                    LoadMovieDetail();
+                    LoadPage();
                 }
             }
         }
@@ -114,13 +123,26 @@ namespace Comp229_TeamAssign
         protected void EditReviewBtn_Click(object sender, EventArgs e)
         {
             RepeaterItem item = (sender as Button).Parent as RepeaterItem;
-            (item.FindControl("lblReviewScore") as Label).Visible = false;
-            (item.FindControl("txtReview") as Label).Visible = false;
-            (item.FindControl("btnEdit") as Label).Visible = false;
-            (item.FindControl("txtEditReviewScore") as TextBox).Visible = true;
-            (item.FindControl("txtEditReviewText") as TextBox).Visible = true;
-            (item.FindControl("btnCancel") as Button).Visible = true;
-            (item.FindControl("btnConfirm") as Button).Visible = true;
+
+            if (CheckLoginStatus())
+            {
+                string reviewID = (sender as Button).CommandArgument;
+                string crtMemberID = GetMemberID();
+                if (reviewID == crtMemberID)
+                {
+                    item.FindControl("lblReviewScore").Visible = false;
+                    item.FindControl("txtReview").Visible = false;
+                    item.FindControl("btnEdit").Visible = false;
+                    item.FindControl("txtEditReviewScore").Visible = true;
+                    item.FindControl("txtEditReviewText").Visible = true;
+                    item.FindControl("btnCancel").Visible = true;
+                    item.FindControl("btnConfirm").Visible = true;
+                }
+                else
+                    (item.FindControl("lblEditingReviewFeedback") as Label).Text = "You are not the review writer";
+            }
+            else
+                (item.FindControl("lblEditingReviewFeedback") as Label).Text = "You are not logged in";
         }
 
         /// <summary>
@@ -132,13 +154,13 @@ namespace Comp229_TeamAssign
         protected void CancelEditingReviewBtn_Click(object sender, EventArgs e)
         {
             RepeaterItem item = (sender as Button).Parent as RepeaterItem;
-            (item.FindControl("lblReviewScore") as Label).Visible = true;
-            (item.FindControl("txtReview") as Label).Visible = true;
-            (item.FindControl("btnEdit") as Label).Visible = true;
-            (item.FindControl("txtEditReviewScore") as TextBox).Visible = false;
-            (item.FindControl("txtEditReviewText") as TextBox).Visible = false;
-            (item.FindControl("btnCancel") as Button).Visible = false;
-            (item.FindControl("btnConfirm") as Button).Visible = false;
+            item.FindControl("lblReviewScore").Visible = true;
+            item.FindControl("txtReview").Visible = true;
+            item.FindControl("btnEdit").Visible = true;
+            item.FindControl("txtEditReviewScore").Visible = false;
+            item.FindControl("txtEditReviewText").Visible = false;
+            item.FindControl("btnCancel").Visible = false;
+            item.FindControl("btnConfirm").Visible = false;
         }
 
         /// <summary>
@@ -148,67 +170,89 @@ namespace Comp229_TeamAssign
         /// <param name="e"></param>
         protected void ConfirmEditingReviewBtn_Click(object sender, EventArgs e)
         {
-            if (checkLoginStatus())
+            RepeaterItem item = (sender as Button).Parent as RepeaterItem;
+
+            if (CheckLoginStatus())
             {
-                RepeaterItem item = (sender as Button).Parent as RepeaterItem;
-                string opinion = (item.FindControl("txtEditReviewText") as TextBox).Text;
-                string score = (item.FindControl("txtEditReviewScore") as TextBox).Text;
                 string reviewID = (sender as Button).CommandArgument;
-                string memberID = GetMemberID();
-
-                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                string crtMemberID = GetMemberID();
+                if (reviewID == crtMemberID)
                 {
-                    conn.Open();
+                    string opinion = (item.FindControl("txtEditReviewText") as TextBox).Text;
+                    string score = (item.FindControl("txtEditReviewScore") as TextBox).Text;
 
-                    // update review in DB
-                    // double check with ReviewID and Current MemberID
-                    SqlCommand updateReview = new SqlCommand(
-                         "UPDATE Review SET Score = @Score, Opinion = @Opinion WHERE ReviewID = @ReviewID AND MemberID = @MemberID;", conn);
-                    updateReview.Parameters.AddWithValue("@Score", score);
-                    updateReview.Parameters.AddWithValue("@Opinion", opinion);
-                    updateReview.Parameters.AddWithValue("@ReviewID", reviewID);
-                    updateReview.Parameters.AddWithValue("@MemberID", memberID);
-                    updateReview.ExecuteNonQuery();
+                    using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                    {
+                        conn.Open();
 
-                    conn.Close();
+                        // update review in DB
+                        // double check with ReviewID and Current MemberID
+                        SqlCommand updateReview = new SqlCommand(
+                             "UPDATE Review SET Score = @Score, Opinion = @Opinion WHERE ReviewID = @ReviewID AND MemberID = @MemberID;", conn);
+                        updateReview.Parameters.AddWithValue("@Score", score);
+                        updateReview.Parameters.AddWithValue("@Opinion", opinion);
+                        updateReview.Parameters.AddWithValue("@ReviewID", reviewID);
+                        updateReview.Parameters.AddWithValue("@MemberID", crtMemberID);
+                        updateReview.ExecuteNonQuery();
+
+                        conn.Close();
+                    }
+
+                    item.FindControl("lblReviewScore").Visible = true;
+                    item.FindControl("txtReview").Visible = true;
+                    item.FindControl("btnEdit").Visible = true;
+                    item.FindControl("txtEditReviewScore").Visible = false;
+                    item.FindControl("txtEditReviewText").Visible = false;
+                    item.FindControl("btnCancel").Visible = false;
+                    item.FindControl("btnConfirm").Visible = false;
+
+                    UpdateMovieScore();
+                    LoadPage();
                 }
+                else
+                    (item.FindControl("lblEditingReviewFeedback") as Label).Text = "You are not the review writer";
             }
-            LoadMovieDetail();
+            else
+                (item.FindControl("lblEditingReviewFeedback") as Label).Text = "You are not logged in";
         }
 
         /// <summary>
         /// Action of DeleteReviewBtn
+        /// Delete Review data in DB
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         protected void DeleteReviewBtn_Click(object sender, EventArgs e)
         {
-            if (checkLoginStatus())
+            RepeaterItem item = (sender as Button).Parent as RepeaterItem;
+
+            if (CheckLoginStatus())
             {
-                RepeaterItem item = (sender as Button).Parent as RepeaterItem;
-                string opinion = (item.FindControl("txtEditReviewText") as TextBox).Text;
-                string score = (item.FindControl("txtEditReviewScore") as TextBox).Text;
                 string reviewID = (sender as Button).CommandArgument;
-                string memberID = GetMemberID();
-
-                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                string crtMemberID = GetMemberID();
+                if (reviewID == crtMemberID)
                 {
-                    conn.Open();
+                    using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                    {
+                        conn.Open();
 
-                    // delete review in DB
-                    // double check with ReviewID and Current MemberID
-                    SqlCommand deleteReview = new SqlCommand(
-                         "DELETE FROM Review WHERE ReviewID = @ReviewID AND MemberID = @MemberID;", conn);
-                    deleteReview.Parameters.AddWithValue("@Score", score);
-                    deleteReview.Parameters.AddWithValue("@Opinion", opinion);
-                    deleteReview.Parameters.AddWithValue("@ReviewID", reviewID);
-                    deleteReview.Parameters.AddWithValue("@MemberID", memberID);
-                    deleteReview.ExecuteNonQuery();
+                        // delete review in DB
+                        // double check with ReviewID and Current MemberID
+                        SqlCommand deleteReview = new SqlCommand(
+                             "DELETE FROM Review WHERE ReviewID = @ReviewID", conn);
+                        deleteReview.Parameters.AddWithValue("@ReviewID", reviewID);
+                        deleteReview.ExecuteNonQuery();
 
-                    conn.Close();
+                        conn.Close();
+                    }
+                    UpdateMovieScore();
+                    LoadPage();
                 }
+                else
+                    (item.FindControl("lblEditingReviewFeedback") as Label).Text = "You are not the review writer";
             }
-            LoadMovieDetail();
+            else
+                (item.FindControl("lblEditingReviewFeedback") as Label).Text = "You are not logged in";
         }
 
         #endregion
@@ -228,12 +272,12 @@ namespace Comp229_TeamAssign
                     conn.Open();
 
                     // get movie data from DB
-                    SqlCommand getTitle = new SqlCommand(
-                         "SELECT *, SELECT CONVERT(VARCHAR(10), PublishedDate, 120) AS Date FROM Movie " +
+                    SqlCommand getMovie = new SqlCommand(
+                         "SELECT *, CONVERT(VARCHAR(10), PublishedDate, 120) AS Date, CONVERT(VARCHAR(10), PostedDate, 120) AS PostedDate FROM Movie " +
                          "WHERE MovieID = @MovieID;", conn);
-                    getTitle.Parameters.AddWithValue("@MovieID", movieID);
+                    getMovie.Parameters.AddWithValue("@MovieID", movieID);
 
-                    SqlDataReader dr = getTitle.ExecuteReader();
+                    SqlDataReader dr = getMovie.ExecuteReader();
 
                     while (dr.Read())
                     {
@@ -249,12 +293,9 @@ namespace Comp229_TeamAssign
                         movie.PictureUrl = dr["PictureUrl"].ToString();
                         movie.PostedDate = dr["PostedDate"].ToString();
                         movie.ReviewScore = (double)dr["ReviewScore"];
-                        movie = dr[""].ToString();
-                        movie = dr[""].ToString();
-                        movie = dr[""].ToString();
-                        movie = dr[""].ToString();
-
                     }
+                    dr.Close();
+
                     Session["Movie"] = movie;
 
                     // display data on page
@@ -267,6 +308,8 @@ namespace Comp229_TeamAssign
                     aOfficialSite.HRef = movie.OfficialLink;
                     txtDescription.InnerText = movie.Description;
                     movieImage.Src = movie.PictureUrl;
+                    lblReviewScore.Text = movie.ReviewScore.ToString();
+                    lblStatus.Text = GetMovieStatus();
 
                     conn.Close();
                 }
@@ -279,13 +322,54 @@ namespace Comp229_TeamAssign
                 Response.Redirect("MainTracking.aspx");
             }
         }
+
+        /// <summary>
+        /// Load review data from DB and display them into Repeater
+        /// </summary>
+        private void LoadReview()
+        {
+            if (Session["MovieID"] != null)
+            {
+                string movieID = Session["MovieID"].ToString();
+
+                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                {
+                    Movie movie = new Movie();
+
+                    conn.Open();
+
+                    // get movie data from DB
+                    SqlCommand getReview = new SqlCommand(
+                         "SELECT *, CONVERT(VARCHAR(10), revDate, 120) AS Date, Account.UserName AS UserName FROM Review " +
+                         "INNER JOIN Account ON Review.MemberID = Account.MemberID " +
+                         "WHERE MovieID = @MovieID;", conn);
+                    getReview.Parameters.AddWithValue("@MovieID", movieID);
+
+                    SqlDataReader dr = getReview.ExecuteReader();
+
+                    ReviewRepeater.DataSource = dr;
+                    ReviewRepeater.DataBind();
+
+                    dr.Close();
+                    conn.Close();
+                }
+                // shows available options up to status of movie
+                SetMovieStatusVisibility();
+            }
+            else
+            {
+                // if there is no value in the session, redirect MainTracking page
+                Response.Redirect("MainTracking.aspx");
+            }
+        }
+
         /// <summary>
         /// Up to status of movie, it shows available options
         /// </summary>
         private void SetMovieStatusVisibility()
         {
             // whene user is logged in
-            if (checkLoginStatus())
+            if (CheckLoginStatus())
             {
                 // check status of relationship between movie and user
                 string crtStatus = GetMovieStatus();
@@ -341,16 +425,11 @@ namespace Comp229_TeamAssign
         /// Return boolean value upto status of user login
         /// </summary>
         /// <returns></returns>
-        private bool checkLoginStatus()
+        private bool CheckLoginStatus()
         {
-            if (Session["Login"] != null)
+            if (Page.User.Identity.IsAuthenticated)
             {
-                if ((bool)Session["Login"])
-                {
-                    return true;
-                }
-                else
-                    return false;
+                return true;
             }
             else
                 return false;
@@ -361,7 +440,8 @@ namespace Comp229_TeamAssign
         /// </summary>
         private void RentMovie()
         {
-            if (Session["MovieID"] != null && Page.User.Identity.Name != null)
+            // only when there is no relatedReview data between Movie and User
+            if (Session["MovieID"] != null && Page.User.Identity.Name != null || GetMovieStatus() != "Loaned" || GetMovieStatus() != "Hidden")
             {
                 using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                 {
@@ -380,14 +460,14 @@ namespace Comp229_TeamAssign
                     conn.Close();
                 }
             }
-            string crtStatus = GetMovieStatus();
         }
         /// <summary>
         /// Remove the status of movie 'loaned' and delte the relationship of movie and user
         /// </summary>
         private void ReturnMovie()
         {
-            if (Session["MovieID"] != null && Page.User.Identity.Name != null)
+            // when the movie is loaned
+            if (Session["MovieID"] != null && Page.User.Identity.Name != null && GetMovieStatus() != "Loaned")
             {
                 using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                 {
@@ -405,37 +485,40 @@ namespace Comp229_TeamAssign
                     conn.Close();
                 }
             }
-            string crtStatus = GetMovieStatus();
         }
         /// <summary>
         /// Change the status of movie 'hidden'
         /// </summary>
         private void HideMovie()
         {
-            using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+            // only when there is no relatedReview data between Movie and User
+            if (Session["MovieID"] != null && Page.User.Identity.Name != null || GetMovieStatus() != "Loaned" || GetMovieStatus() != "Hidden")
             {
-                string movieID = Session["MovieID"].ToString();
-                string memberID = GetMemberID();
+                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                {
+                    string movieID = Session["MovieID"].ToString();
+                    string memberID = GetMemberID();
 
-                conn.Open();
+                    conn.Open();
 
-                SqlCommand insertRelationship = new SqlCommand(
-                    "INSERT INTO RelatedMovie (RelatedMovieID, MovieID, MemberID, Status) " +
-                    "VALUES (NEXT VALUE FOR seq_RelatedMovie, @MovieID, @MemberID, @Status);", conn);
-                insertRelationship.Parameters.AddWithValue("@MovieID", movieID);
-                insertRelationship.Parameters.AddWithValue("@MemberID", memberID);
-                insertRelationship.Parameters.AddWithValue("@Status", "hidden");
+                    SqlCommand insertRelationship = new SqlCommand(
+                        "INSERT INTO RelatedMovie (RelatedMovieID, MovieID, MemberID, Status) " +
+                        "VALUES (NEXT VALUE FOR seq_RelatedMovie, @MovieID, @MemberID, @Status);", conn);
+                    insertRelationship.Parameters.AddWithValue("@MovieID", movieID);
+                    insertRelationship.Parameters.AddWithValue("@MemberID", memberID);
+                    insertRelationship.Parameters.AddWithValue("@Status", "hidden");
 
-                conn.Close();
+                    conn.Close();
+                }
             }
-            string crtStatus = GetMovieStatus();
         }
         /// <summary>
         /// Remove the status of movie 'hidden' and delte the relationship of movie and user
         /// </summary>
         private void UnhidMovie()
         {
-            if (Session["MovieID"] != null && Page.User.Identity.Name != null)
+            // when the movie is hidden
+            if (Session["MovieID"] != null && Page.User.Identity.Name != null && GetMovieStatus() != "Hidden")
             {
                 using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                 {
@@ -453,7 +536,6 @@ namespace Comp229_TeamAssign
                     conn.Close();
                 }
             }
-            string crtStatus = GetMovieStatus();
         }
 
         /// <summary>
@@ -464,7 +546,7 @@ namespace Comp229_TeamAssign
         /// <returns></returns>
         private string GetMovieStatus()
         {
-            string status = null;
+            string status = "Available";
             if (Session["MovieID"] != null && Page.User.Identity.Name != null)
             {
                 using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
@@ -478,7 +560,22 @@ namespace Comp229_TeamAssign
                         "SELECT Status FROM RelatedMovie WHERE MovieID = @MovieID AND MemberID = @MemberID", conn);
                     getMovieStatus.Parameters.AddWithValue("@MovieID", movieID);
                     getMovieStatus.Parameters.AddWithValue("@MemberID", memberID);
-                    status = getMovieStatus.ExecuteScalar().ToString();
+                    string relatedStatus;
+
+                    // prevent NullReferenceException
+                    try
+                    {
+                        relatedStatus = getMovieStatus.ExecuteScalar().ToString();
+                    }
+                    catch
+                    {
+                        relatedStatus = "";
+                    }
+
+                    if (relatedStatus == "loaned")
+                        status = "Loaned";
+                    else if (relatedStatus == "hidden")
+                        status = "Hidden";
 
                     conn.Close();
                 }
@@ -493,7 +590,7 @@ namespace Comp229_TeamAssign
         /// <returns></returns>
         private string GetMemberID()
         {
-            string memberID = null;
+            string memberID = "";
 
             if (Page.User.Identity.IsAuthenticated)
             {
@@ -513,6 +610,50 @@ namespace Comp229_TeamAssign
 
             }
             return memberID;
+        }
+
+        /// <summary>
+        /// Update movie score with related reviews in DB
+        /// </summary>
+        private void UpdateMovieScore()
+        {
+            if (Session["MovieID"] != null)
+            {
+                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                {
+                    string movieID = Session["MovieID"].ToString();
+                    string memberID = GetMemberID();
+                    double sum = 0;
+                    double count = 1;
+                    double score;
+
+                    conn.Open();
+
+                    // get SUM and Count of all review scores
+                    SqlCommand getMovieScore = new SqlCommand(
+                        "SELECT SUM(Score) AS TotalScore, COUNT(Score) AS CountScore FROM Review WHERE MemberID = @MemberID", conn);
+                    getMovieScore.Parameters.AddWithValue("@MemberID", memberID);
+                    SqlDataReader dr = getMovieScore.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        sum = (double)dr["TotalScore"];
+                        count = (double)dr["CountScore"];
+                    }
+                    dr.Close();
+
+                    score = Math.Round(sum / count, 2);
+
+                    // update movie score in movie db
+                    SqlCommand updateMovieScore = new SqlCommand(
+                        "UPDATE Movie SET Score = @Score WHERE MovieID = @MovieID;", conn);
+                    updateMovieScore.Parameters.AddWithValue("@MovieID", movieID);
+                    updateMovieScore.Parameters.AddWithValue("@Score", score);
+                    updateMovieScore.ExecuteNonQuery();
+
+                    conn.Close();
+                }
+            }
         }
     }
 }
