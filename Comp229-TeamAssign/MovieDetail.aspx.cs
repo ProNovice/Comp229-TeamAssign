@@ -24,6 +24,7 @@ namespace Comp229_TeamAssign
         /// </summary>
         private void LoadPage()
         {
+            UpdateMovieScore();
             LoadMovieDetail();
             LoadReview();
         }
@@ -66,6 +67,7 @@ namespace Comp229_TeamAssign
         /// <param name="e"></param>
         protected void UnhideBtn_Click(object sender, EventArgs e)
         {
+            UpdateMovieScore();
             UnhidMovie();
             LoadMovieDetail();
         }
@@ -89,17 +91,23 @@ namespace Comp229_TeamAssign
                     string memberID = GetMemberID();
                     string opinion = txtReviewComment.Text;
                     string score = txtReviewScore.Text;
-                    string date = DateTime.Today.ToString("YYYY-MM-DD");
+                    var date = DateTime.Today;
 
                     // using SqlConnection from Web.config
                     using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                     {
                         conn.Open();
+                        int index;
+                        // get index
+                        SqlCommand getLastIndex = new SqlCommand(
+                            "SELECT MAX(ReviewID) FROM Review;", conn);
+                        index = (int)getLastIndex.ExecuteScalar() + 1;
 
                         // insert review
                         SqlCommand insertReview = new SqlCommand(
-                         "INSERT INTO Movie (ReviewID, MovieID, MemberID, Opinion, Score, revDate) " +
-                         "VALUES (NEXT VALUE FOR seq_Review, @MovieID, @MemberID, @Opinion, @Score, @revDate);", conn);
+                         "INSERT INTO Review (ReviewID, MovieID, MemberID, Opinion, Score, revDate) " +
+                         "VALUES (@ReviewID, @MovieID, @MemberID, @Opinion, @Score, @revDate);", conn);
+                        insertReview.Parameters.AddWithValue("@ReviewID", index);
                         insertReview.Parameters.AddWithValue("@MovieID", movieID);
                         insertReview.Parameters.AddWithValue("@MemberID", memberID);
                         insertReview.Parameters.AddWithValue("@Opinion", opinion);
@@ -127,8 +135,9 @@ namespace Comp229_TeamAssign
             if (CheckLoginStatus())
             {
                 string reviewID = (sender as Button).CommandArgument;
+                string writerID = GetWriterID(reviewID);
                 string crtMemberID = GetMemberID();
-                if (reviewID == crtMemberID)
+                if (writerID == crtMemberID)
                 {
                     item.FindControl("lblReviewScore").Visible = false;
                     item.FindControl("txtReview").Visible = false;
@@ -175,8 +184,9 @@ namespace Comp229_TeamAssign
             if (CheckLoginStatus())
             {
                 string reviewID = (sender as Button).CommandArgument;
+                string writerID = GetWriterID(reviewID);
                 string crtMemberID = GetMemberID();
-                if (reviewID == crtMemberID)
+                if (writerID == crtMemberID)
                 {
                     string opinion = (item.FindControl("txtEditReviewText") as TextBox).Text;
                     string score = (item.FindControl("txtEditReviewScore") as TextBox).Text;
@@ -205,8 +215,7 @@ namespace Comp229_TeamAssign
                     item.FindControl("txtEditReviewText").Visible = false;
                     item.FindControl("btnCancel").Visible = false;
                     item.FindControl("btnConfirm").Visible = false;
-
-                    UpdateMovieScore();
+                    
                     LoadPage();
                 }
                 else
@@ -229,8 +238,9 @@ namespace Comp229_TeamAssign
             if (CheckLoginStatus())
             {
                 string reviewID = (sender as Button).CommandArgument;
+                string writerID = GetWriterID(reviewID);
                 string crtMemberID = GetMemberID();
-                if (reviewID == crtMemberID)
+                if (writerID == crtMemberID)
                 {
                     using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                     {
@@ -245,7 +255,6 @@ namespace Comp229_TeamAssign
 
                         conn.Close();
                     }
-                    UpdateMovieScore();
                     LoadPage();
                 }
                 else
@@ -449,10 +458,16 @@ namespace Comp229_TeamAssign
                     string memberID = GetMemberID(); ;
 
                     conn.Open();
+                    int index;
+                    // get index
+                    SqlCommand getLastIndex = new SqlCommand(
+                        "SELECT MAX(RelatedMovieID) FROM RelatedMovie;", conn);
+                    index = (int)getLastIndex.ExecuteScalar() + 1;
 
                     SqlCommand insertRelationship = new SqlCommand(
                         "INSERT INTO RelatedMovie (RelatedMovieID, MovieID, MemberID, Status) " +
-                        "VALUES (NEXT VALUE FOR seq_RelatedMovie, @MovieID, @MemberID, @Status);", conn);
+                        "VALUES (@RelatedMovieID, @MovieID, @MemberID, @Status);", conn);
+                    insertRelationship.Parameters.AddWithValue("@RelatedMovieID", index);
                     insertRelationship.Parameters.AddWithValue("@MovieID", movieID);
                     insertRelationship.Parameters.AddWithValue("@MemberID", memberID);
                     insertRelationship.Parameters.AddWithValue("@Status", "loaned");
@@ -497,13 +512,19 @@ namespace Comp229_TeamAssign
                 using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                 {
                     string movieID = Session["MovieID"].ToString();
-                    string memberID = GetMemberID();
+                    string memberID = GetMemberID(); ;
 
                     conn.Open();
+                    int index;
+                    // get index
+                    SqlCommand getLastIndex = new SqlCommand(
+                        "SELECT MAX(RelatedMovieID) FROM RelatedMovie;", conn);
+                    index = (int)getLastIndex.ExecuteScalar() + 1;
 
                     SqlCommand insertRelationship = new SqlCommand(
                         "INSERT INTO RelatedMovie (RelatedMovieID, MovieID, MemberID, Status) " +
-                        "VALUES (NEXT VALUE FOR seq_RelatedMovie, @MovieID, @MemberID, @Status);", conn);
+                        "VALUES (@RelatedMovieID, @MovieID, @MemberID, @Status);", conn);
+                    insertRelationship.Parameters.AddWithValue("@RelatedMovieID", index);
                     insertRelationship.Parameters.AddWithValue("@MovieID", movieID);
                     insertRelationship.Parameters.AddWithValue("@MemberID", memberID);
                     insertRelationship.Parameters.AddWithValue("@Status", "hidden");
@@ -608,6 +629,28 @@ namespace Comp229_TeamAssign
                     conn.Close();
                 }
 
+            }
+            return memberID;
+        }
+
+        /// <summary>
+        /// Return Writer ID of input reviewID
+        /// </summary>
+        /// <param name="reviewID"></param>
+        /// <returns></returns>
+        private string GetWriterID(string reviewID)
+        {
+            string memberID = "";
+            using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+            {
+                conn.Open();
+
+                SqlCommand getWriterID = new SqlCommand(
+                    "SELECT MemberID FROM Review WHERE ReviewID = @ReviewID;", conn);
+                getWriterID.Parameters.AddWithValue("@ReviewID", reviewID);
+                memberID = getWriterID.ExecuteScalar().ToString();
+
+                conn.Close();
             }
             return memberID;
         }
