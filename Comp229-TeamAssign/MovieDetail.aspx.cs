@@ -38,7 +38,6 @@ namespace Comp229_TeamAssign
         protected void RentBtn_Click(object sender, EventArgs e)
         {
             RentMovie();
-            LoadMovieDetail();
         }
         /// <summary>
         /// Action of ReturnBtn
@@ -48,7 +47,6 @@ namespace Comp229_TeamAssign
         protected void ReturnBtn_Click(object sender, EventArgs e)
         {
             ReturnMovie();
-            LoadMovieDetail();
         }
         /// <summary>
         /// Action of HideBtn
@@ -58,7 +56,6 @@ namespace Comp229_TeamAssign
         protected void HideBtn_Click(object sender, EventArgs e)
         {
             HideMovie();
-            LoadMovieDetail();
         }
         /// <summary>
         /// Action of UnhideBtn
@@ -67,9 +64,7 @@ namespace Comp229_TeamAssign
         /// <param name="e"></param>
         protected void UnhideBtn_Click(object sender, EventArgs e)
         {
-            UpdateMovieScore();
             UnhidMovie();
-            LoadMovieDetail();
         }
         #endregion
 
@@ -215,7 +210,7 @@ namespace Comp229_TeamAssign
                     item.FindControl("txtEditReviewText").Visible = false;
                     item.FindControl("btnCancel").Visible = false;
                     item.FindControl("btnConfirm").Visible = false;
-                    
+
                     LoadPage();
                 }
                 else
@@ -410,7 +405,7 @@ namespace Comp229_TeamAssign
                         movie = Session["Movie"] as Movie;
 
                         // show status of Movie itself
-                        lblStatus.Text = movie.Status;
+                        lblStatus.Text = GetMovieStatus();
                     }
                     btnHide.Visible = true;
                     btnUnhide.Visible = false;
@@ -449,114 +444,150 @@ namespace Comp229_TeamAssign
         /// </summary>
         private void RentMovie()
         {
-            // only when there is no relatedReview data between Movie and User
-            if (Session["MovieID"] != null && Page.User.Identity.Name != null || GetMovieStatus() != "Loaned" || GetMovieStatus() != "Hidden")
+            if (Page.User.Identity.IsAuthenticated)
             {
-                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                // only when there is no relatedReview data between Movie and User
+                if (Session["MovieID"] != null && GetMovieStatus() != "Loaned" && GetMovieStatus() != "Hidden")
                 {
-                    string movieID = Session["MovieID"].ToString();
-                    string memberID = GetMemberID(); ;
+                    using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                    {
+                        string movieID = Session["MovieID"].ToString();
+                        string memberID = GetMemberID();
 
-                    conn.Open();
-                    int index;
-                    // get index
-                    SqlCommand getLastIndex = new SqlCommand(
-                        "SELECT MAX(RelatedMovieID) FROM RelatedMovie;", conn);
-                    index = (int)getLastIndex.ExecuteScalar() + 1;
+                        conn.Open();
+                        int index;
+                        // get index
+                        SqlCommand getLastIndex = new SqlCommand(
+                            "SELECT MAX(RelatedMovieID) FROM RelatedMovie;", conn);
+                        index = (int)getLastIndex.ExecuteScalar() + 1;
 
-                    SqlCommand insertRelationship = new SqlCommand(
-                        "INSERT INTO RelatedMovie (RelatedMovieID, MovieID, MemberID, Status) " +
-                        "VALUES (@RelatedMovieID, @MovieID, @MemberID, @Status);", conn);
-                    insertRelationship.Parameters.AddWithValue("@RelatedMovieID", index);
-                    insertRelationship.Parameters.AddWithValue("@MovieID", movieID);
-                    insertRelationship.Parameters.AddWithValue("@MemberID", memberID);
-                    insertRelationship.Parameters.AddWithValue("@Status", "loaned");
+                        SqlCommand insertRelationship = new SqlCommand(
+                            "INSERT INTO RelatedMovie (RelatedMovieID, MovieID, MemberID, Status) " +
+                            "VALUES (@RelatedMovieID, @MovieID, @MemberID, @Status);", conn);
+                        insertRelationship.Parameters.AddWithValue("@RelatedMovieID", index);
+                        insertRelationship.Parameters.AddWithValue("@MovieID", movieID);
+                        insertRelationship.Parameters.AddWithValue("@MemberID", memberID);
+                        insertRelationship.Parameters.AddWithValue("@Status", "loaned");
 
-                    conn.Close();
+                        insertRelationship.ExecuteNonQuery();
+
+                        conn.Close();
+
+                        LoadPage();
+                    }
                 }
             }
+            else
+                lblMovieActionFeedback.Text = "Please login";
         }
         /// <summary>
         /// Remove the status of movie 'loaned' and delte the relationship of movie and user
         /// </summary>
         private void ReturnMovie()
         {
-            // when the movie is loaned
-            if (Session["MovieID"] != null && Page.User.Identity.Name != null && GetMovieStatus() != "Loaned")
+            if (Page.User.Identity.IsAuthenticated)
             {
-                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                // when the movie is loaned
+                if (Session["MovieID"] != null && GetMovieStatus() == "Loaned")
                 {
-                    string movieID = Session["MovieID"].ToString();
-                    string memberID = GetMemberID(); ;
+                    using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                    {
+                        string movieID = Session["MovieID"].ToString();
+                        string memberID = GetMemberID();
 
-                    conn.Open();
+                        conn.Open();
 
-                    SqlCommand deleteRelationship = new SqlCommand(
-                        "DELETE FROM RelatedMovie WHERE MovieID = @MovieID AND MemberID = @MemberID AND Status = @Status;", conn);
-                    deleteRelationship.Parameters.AddWithValue("@MovieID", movieID);
-                    deleteRelationship.Parameters.AddWithValue("@MemberID", memberID);
-                    deleteRelationship.Parameters.AddWithValue("@Status", "loaned");
+                        SqlCommand deleteRelationship = new SqlCommand(
+                            "DELETE FROM RelatedMovie WHERE MovieID = @MovieID AND MemberID = @MemberID AND Status = @Status;", conn);
+                        deleteRelationship.Parameters.AddWithValue("@MovieID", movieID);
+                        deleteRelationship.Parameters.AddWithValue("@MemberID", memberID);
+                        deleteRelationship.Parameters.AddWithValue("@Status", "loaned");
 
-                    conn.Close();
+                        deleteRelationship.ExecuteNonQuery();
+
+                        conn.Close();
+
+                        LoadPage();
+                    }
                 }
             }
+            else
+                lblMovieActionFeedback.Text = "Please login";
         }
         /// <summary>
         /// Change the status of movie 'hidden'
         /// </summary>
         private void HideMovie()
         {
-            // only when there is no relatedReview data between Movie and User
-            if (Session["MovieID"] != null && Page.User.Identity.Name != null || GetMovieStatus() != "Loaned" || GetMovieStatus() != "Hidden")
+            if (Page.User.Identity.IsAuthenticated)
             {
-                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                // only when there is no relatedReview data between Movie and User
+                if (Session["MovieID"] != null && GetMovieStatus() != "Loaned" && GetMovieStatus() != "Hidden")
                 {
-                    string movieID = Session["MovieID"].ToString();
-                    string memberID = GetMemberID(); ;
+                    using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                    {
+                        string movieID = Session["MovieID"].ToString();
+                        string memberID = GetMemberID();
 
-                    conn.Open();
-                    int index;
-                    // get index
-                    SqlCommand getLastIndex = new SqlCommand(
-                        "SELECT MAX(RelatedMovieID) FROM RelatedMovie;", conn);
-                    index = (int)getLastIndex.ExecuteScalar() + 1;
+                        conn.Open();
+                        int index;
+                        // get index
+                        SqlCommand getLastIndex = new SqlCommand(
+                            "SELECT MAX(RelatedMovieID) FROM RelatedMovie;", conn);
+                        index = (int)getLastIndex.ExecuteScalar() + 1;
 
-                    SqlCommand insertRelationship = new SqlCommand(
-                        "INSERT INTO RelatedMovie (RelatedMovieID, MovieID, MemberID, Status) " +
-                        "VALUES (@RelatedMovieID, @MovieID, @MemberID, @Status);", conn);
-                    insertRelationship.Parameters.AddWithValue("@RelatedMovieID", index);
-                    insertRelationship.Parameters.AddWithValue("@MovieID", movieID);
-                    insertRelationship.Parameters.AddWithValue("@MemberID", memberID);
-                    insertRelationship.Parameters.AddWithValue("@Status", "hidden");
+                        SqlCommand insertRelationship = new SqlCommand(
+                            "INSERT INTO RelatedMovie (RelatedMovieID, MovieID, MemberID, Status) " +
+                            "VALUES (@RelatedMovieID, @MovieID, @MemberID, @Status);", conn);
+                        insertRelationship.Parameters.AddWithValue("@RelatedMovieID", index);
+                        insertRelationship.Parameters.AddWithValue("@MovieID", movieID);
+                        insertRelationship.Parameters.AddWithValue("@MemberID", memberID);
+                        insertRelationship.Parameters.AddWithValue("@Status", "hidden");
 
-                    conn.Close();
+                        insertRelationship.ExecuteNonQuery();
+
+                        conn.Close();
+
+                        LoadPage();
+                    }
                 }
             }
+            else
+                lblMovieActionFeedback.Text = "Please login";
         }
         /// <summary>
         /// Remove the status of movie 'hidden' and delte the relationship of movie and user
         /// </summary>
         private void UnhidMovie()
         {
-            // when the movie is hidden
-            if (Session["MovieID"] != null && Page.User.Identity.Name != null && GetMovieStatus() != "Hidden")
+            if (Page.User.Identity.IsAuthenticated)
             {
-                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                // when the movie is hidden
+                if (Session["MovieID"] != null && GetMovieStatus() != "hidden")
                 {
-                    string movieID = Session["MovieID"].ToString();
-                    string memberID = GetMemberID(); ;
+                    using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                    {
+                        string movieID = Session["MovieID"].ToString();
+                        string memberID = GetMemberID();
 
-                    conn.Open();
+                        conn.Open();
 
-                    SqlCommand deleteRelationship = new SqlCommand(
-                        "DELETE FROM RelatedMovie WHERE MovieID = @MovieID AND MemberID = @MemberID AND Status = @Status;", conn);
-                    deleteRelationship.Parameters.AddWithValue("@MovieID", movieID);
-                    deleteRelationship.Parameters.AddWithValue("@MemberID", memberID);
-                    deleteRelationship.Parameters.AddWithValue("@Status", "hidden");
+                        SqlCommand deleteRelationship = new SqlCommand(
+                            "DELETE FROM RelatedMovie WHERE MovieID = @MovieID AND MemberID = @MemberID AND Status = @Status;", conn);
+                        deleteRelationship.Parameters.AddWithValue("@MovieID", movieID);
+                        deleteRelationship.Parameters.AddWithValue("@MemberID", memberID);
+                        deleteRelationship.Parameters.AddWithValue("@Status", "hidden");
 
-                    conn.Close();
+                        deleteRelationship.ExecuteNonQuery();
+
+                        conn.Close();
+
+                        LoadPage();
+                    }
                 }
             }
+            else
+                lblMovieActionFeedback.Text = "Please login";
         }
 
         /// <summary>
@@ -568,29 +599,36 @@ namespace Comp229_TeamAssign
         private string GetMovieStatus()
         {
             string status = "Available";
-            if (Session["MovieID"] != null && Page.User.Identity.Name != null)
+            if (Session["MovieID"] != null)
             {
                 using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                 {
-
                     string movieID = Session["MovieID"].ToString();
                     string memberID = GetMemberID();
 
                     conn.Open();
-                    SqlCommand getMovieStatus = new SqlCommand(
+                    SqlCommand getRelatedMovieStatus = new SqlCommand(
                         "SELECT Status FROM RelatedMovie WHERE MovieID = @MovieID AND MemberID = @MemberID", conn);
+                    getRelatedMovieStatus.Parameters.AddWithValue("@MovieID", movieID);
+                    getRelatedMovieStatus.Parameters.AddWithValue("@MemberID", memberID);
+                    string relatedStatus = "Available";
+
+                    SqlCommand getMovieStatus = new SqlCommand(
+                        "SELECT Status FROM Movie WHERE MovieID = @MovieID;", conn);
                     getMovieStatus.Parameters.AddWithValue("@MovieID", movieID);
-                    getMovieStatus.Parameters.AddWithValue("@MemberID", memberID);
-                    string relatedStatus;
+                    string movieStatus = getMovieStatus.ExecuteScalar().ToString();
 
                     // prevent NullReferenceException
                     try
                     {
-                        relatedStatus = getMovieStatus.ExecuteScalar().ToString();
+                        relatedStatus = getRelatedMovieStatus.ExecuteScalar().ToString();
                     }
                     catch
                     {
-                        relatedStatus = "";
+                        if (movieStatus == "Owned")
+                            status = "Available";
+                        else if(!string.IsNullOrEmpty(movieStatus))
+                            status = movieStatus;
                     }
 
                     if (relatedStatus == "loaned")
@@ -606,7 +644,7 @@ namespace Comp229_TeamAssign
 
         /// <summary>
         /// get memberID from DB
-        /// if there is no match, return null
+        /// if there is no match, return "".
         /// </summary>
         /// <returns></returns>
         private string GetMemberID()
@@ -665,31 +703,28 @@ namespace Comp229_TeamAssign
                 using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                 {
                     string movieID = Session["MovieID"].ToString();
-                    string memberID = GetMemberID();
-                    double sum = 0;
-                    double count = 1;
-                    double score;
+                    double score = 0;
 
                     conn.Open();
 
                     // get SUM and Count of all review scores
-                    SqlCommand getMovieScore = new SqlCommand(
-                        "SELECT SUM(Score) AS TotalScore, COUNT(Score) AS CountScore FROM Review WHERE MemberID = @MemberID", conn);
-                    getMovieScore.Parameters.AddWithValue("@MemberID", memberID);
-                    SqlDataReader dr = getMovieScore.ExecuteReader();
+                    SqlCommand getTotalScore = new SqlCommand(
+                        "SELECT SUM(Score) FROM Review WHERE MovieID = @MovieID", conn);
+                    getTotalScore.Parameters.AddWithValue("@MovieID", movieID);
+                    string sum = getTotalScore.ExecuteScalar().ToString();
+                    //(double)getMovieScore.ExecuteScalar();
 
-                    while (dr.Read())
-                    {
-                        sum = (double)dr["TotalScore"];
-                        count = (double)dr["CountScore"];
-                    }
-                    dr.Close();
+                    SqlCommand getCount = new SqlCommand(
+                        "SELECT COUNT(Score) AS Count FROM Review WHERE MovieID = @MovieID", conn);
+                    getCount.Parameters.AddWithValue("@MovieID", movieID);
+                    string count = getCount.ExecuteScalar().ToString();
 
-                    score = Math.Round(sum / count, 2);
+                    // because of cast error, the casts of variables(sum, count) are string type
+                    score = Math.Round(Convert.ToDouble(sum) / Convert.ToDouble(count), 2);
 
                     // update movie score in movie db
                     SqlCommand updateMovieScore = new SqlCommand(
-                        "UPDATE Movie SET Score = @Score WHERE MovieID = @MovieID;", conn);
+                        "UPDATE Movie SET ReviewScore = @Score WHERE MovieID = @MovieID;", conn);
                     updateMovieScore.Parameters.AddWithValue("@MovieID", movieID);
                     updateMovieScore.Parameters.AddWithValue("@Score", score);
                     updateMovieScore.ExecuteNonQuery();
