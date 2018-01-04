@@ -15,10 +15,16 @@ namespace Comp229_TeamAssign
         {
             if (!IsPostBack)
             {
+                Session["MovieID"] = 2001;
                 LoadMovieDetail();
             }
         }
         #region Related Movie
+        /// <summary>
+        /// Action of Rent
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void RentBtn_Click(object sender, EventArgs e)
         {
             RentMovie();
@@ -223,11 +229,32 @@ namespace Comp229_TeamAssign
 
                     // get movie data from DB
                     SqlCommand getTitle = new SqlCommand(
-                         "SELECT * FROM Movie " +
+                         "SELECT *, SELECT CONVERT(VARCHAR(10), PublishedDate, 120) AS Date FROM Movie " +
                          "WHERE MovieID = @MovieID;", conn);
                     getTitle.Parameters.AddWithValue("@MovieID", movieID);
-                    movie = getTitle.ExecuteScalar() as Movie;
 
+                    SqlDataReader dr = getTitle.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        movie.MovieID = (int)dr["MovieID"];
+                        movie.Title = dr["Title"].ToString();
+                        movie.Genre = dr["Genre"].ToString();
+                        movie.Director = dr["Director"].ToString();
+                        movie.Company = dr["Company"].ToString();
+                        movie.PublishedDate = dr["Date"].ToString();
+                        movie.Duration = (int)dr["Duration"];
+                        movie.OfficialLink = dr["OfficialLink"].ToString();
+                        movie.Description = dr["Description"].ToString();
+                        movie.PictureUrl = dr["PictureUrl"].ToString();
+                        movie.PostedDate = dr["PostedDate"].ToString();
+                        movie.ReviewScore = (double)dr["ReviewScore"];
+                        movie = dr[""].ToString();
+                        movie = dr[""].ToString();
+                        movie = dr[""].ToString();
+                        movie = dr[""].ToString();
+
+                    }
                     Session["Movie"] = movie;
 
                     // display data on page

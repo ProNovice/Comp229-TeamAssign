@@ -18,20 +18,20 @@ namespace Comp229_TeamAssign
 
         protected void GetMovieInfo()
         {
-           // using SqlConnection from Web.config
+            // using SqlConnection from Web.config
             using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
             {
                 conn.Open();
-                {
-                    SqlCommand comm = new SqlCommand("SELECT MovieID, Title, Genre, Duration, ReviewScore, Status, PictureUrl FROM Movie;", conn);
 
-                    SqlDataReader reader = comm.ExecuteReader();
+                SqlCommand comm = new SqlCommand("SELECT MovieID, Title, Genre, Duration, ReviewScore, Status, PictureUrl FROM Movie;", conn);
 
-                    movieRepeater.DataSource = reader;
-                    movieRepeater.DataBind();
+                SqlDataReader reader = comm.ExecuteReader();
 
-                    conn.Close();
-                }
+                movieRepeater.DataSource = reader;
+                movieRepeater.DataBind();
+
+                conn.Close();
+
             }
         }
         //bind the data

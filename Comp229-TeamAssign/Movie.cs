@@ -16,7 +16,7 @@ namespace Comp229_TeamAssign
         public int Duration { get; set; }
         public string OfficialLink { get; set; }
         public string Description { get; set; }
-        public float ReviewScore { get; set; }
+        public double ReviewScore { get; set; }
         public string Status { get; set; }
         public string PostedDate { get; set; }
         public string PictureUrl { get; set; }
