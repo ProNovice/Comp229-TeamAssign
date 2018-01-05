@@ -62,7 +62,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <asp:TextBox TextMode="MultiLine" CssClass="textArea" Rows="5" ID="txtDescription" runat="server" type="text"></asp:TextBox>
+                    <asp:TextBox placeholder="Add some description here..." TextMode="MultiLine" CssClass="textArea float-right" Rows="5" ID="txtDescription" runat="server" type="text"></asp:TextBox>
                     <asp:RequiredFieldValidator ValidationGroup="newMovie" runat="server" ControlToValidate="txtDescription" ErrorMessage="This field cannot be empty." ForeColor="Red"></asp:RequiredFieldValidator>
                 </td>
             </tr>
