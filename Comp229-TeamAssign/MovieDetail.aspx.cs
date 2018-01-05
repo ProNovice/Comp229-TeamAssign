@@ -738,31 +738,30 @@ namespace Comp229_TeamAssign
             }
         }
 
+        /// <summary>
+        /// Update loaned count in Account DB via retrieving data
+        /// </summary>
+        /// <param name="memberID"></param>
         private void UpdateLoanedCount(string memberID)
         {
-            if (Session["MovieID"] != null)
+            using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
             {
-                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
-                {
-                    string movieID = Session["MovieID"].ToString();
+                conn.Open();
 
-                    conn.Open();
+                // get a Count of all loaned movies of the user
+                SqlCommand getLoanedCount = new SqlCommand(
+                    "SELECT COUNT(*) FROM RelatedMovie WHERE MemberID = @MemberID AND Status = 'loaned';", conn);
+                getLoanedCount.Parameters.AddWithValue("@MemberID", memberID);
+                string count = getLoanedCount.ExecuteScalar().ToString();
 
-                    // get a Count of all loaned movies of the user
-                    SqlCommand getLoanedCount = new SqlCommand(
-                        "SELECT COUNT(*) FROM RelatedMovie WHERE MemberID = @MemberID", conn);
-                    getLoanedCount.Parameters.AddWithValue("@MemberID", memberID);
-                    string count = getLoanedCount.ExecuteScalar().ToString();
+                // update movie score in movie db
+                SqlCommand updateLoanedCount = new SqlCommand(
+                    "UPDATE Account SET LoanedCount = @Count WHERE MemberID = @MemberID;", conn);
+                updateLoanedCount.Parameters.AddWithValue("@MemberID", memberID);
+                updateLoanedCount.Parameters.AddWithValue("@Count", count);
+                updateLoanedCount.ExecuteNonQuery();
 
-                    // update movie score in movie db
-                    SqlCommand updateLoanedCount = new SqlCommand(
-                        "UPDATE Account SET LoanedCount = @Count WHERE MemberID = @MemberID;", conn);
-                    updateLoanedCount.Parameters.AddWithValue("@MemberID", memberID);
-                    updateLoanedCount.Parameters.AddWithValue("@Count", count);
-                    updateLoanedCount.ExecuteNonQuery();
-
-                    conn.Close();
-                }
+                conn.Close();
             }
         }
     }
