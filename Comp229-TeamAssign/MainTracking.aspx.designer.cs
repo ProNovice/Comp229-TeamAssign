@@ -40,13 +40,22 @@ namespace Comp229_TeamAssign {
         protected global::System.Web.UI.WebControls.Button btnSearch;
         
         /// <summary>
-        /// loanedMovieRepeater control.
+        /// MovieList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater loanedMovieRepeater;
+        protected global::System.Web.UI.WebControls.DataList MovieList;
+        
+        /// <summary>
+        /// lblLoanedCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLoanedCount;
         
         /// <summary>
         /// movieRepeater control.
@@ -55,6 +64,6 @@ namespace Comp229_TeamAssign {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater movieRepeater;
+        protected global::System.Web.UI.WebControls.DataList movieRepeater;
     }
 }

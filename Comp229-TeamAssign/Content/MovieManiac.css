@@ -68,12 +68,12 @@ page-context {
     width: 100%;
 }
 
-    .banner img {
-    }
 
-.movieList {
+td,tr
+{
+    font-size:large;
+    padding:10px;
 }
-
 .movieTitle {
     font-weight: bold;
     font-size: 25px;
@@ -92,12 +92,6 @@ page-context {
     height: 100px;
 }
 
-.movieListPicture {
-    max-width: 220px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 5px;
-}
 
 .movieListInfo {
     padding: 20px;
@@ -107,7 +101,8 @@ page-context {
 .textArea {
     width: 100%;
 }
-}
+
+
 /* Movie Detail */
 
 .tblMovieInfo {

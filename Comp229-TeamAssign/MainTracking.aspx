@@ -46,10 +46,8 @@
         <label>Search By:</label>
           <asp:DropDownList ID="ddlSearchBy" runat="server" AutoPostBack="True"
              OnSelectedIndexChanged="ddlSearchBy_SelectedIndexChanged">
-        <asp:ListItem Text="All"></asp:ListItem>
         <asp:ListItem Text="Title"></asp:ListItem>       
         <asp:ListItem Text="Genre"></asp:ListItem>
-        <asp:ListItem Text="Director"></asp:ListItem>
         </asp:DropDownList>
           <asp:TextBox ID="txtSearch" runat="server"></asp:TextBox>
             <asp:Button ID="btnSearch" runat="server" Text="Search"
@@ -57,47 +55,87 @@
         <br />
         <hr />
         <br />
+        </div>
+    <div class="container">
+       <asp:DataList runat="server" ID="MovieList" RepeatColumns="3" CellSpacing = "30" RepeatLayout = "Table" OnItemCommand="MovieList_ItemCommand">
+           <ItemTemplate>
+               <table class="table">
+                   <tr>
+                       <th colspan="2">
+                <p class="movieTitle">
+                <asp:LinkButton ID="movieTitle" runat="server"
+                 Text=' <%#Eval("Title")%>'
+                  CommandName="MoreDetail"
+                 CommandArgument='<%#Eval("MovieID")%>' /></p>
+                           </th>
+                       </tr>
+                   <tr>
+                       <td><asp:Image ID="movieListPicture" ImageUrl='<%# Eval("PictureUrl") %>' width="200px" runat="server" /></td>
+                   </tr>
+                   <tr>
+                       <td><b>Genre:</b></td>
+                       <td>
+                            <%# Eval("Genre") %>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td><b>Length:</b></td>
+                       <td> <%# Eval("Duration") %></td>
+                   </tr>
+                   <tr>
+                       <td><b>Review Score:</b></td>
+                       <td><%# Eval("ReviewScore") %></td>
+                   </tr>
+                   <tr>
+                       <td><b>Status: </b></td>
+                       <td><%# Eval("Status") %></td>
+                   </tr>
+                   </table>
+           </ItemTemplate>
 
-        <asp:Repeater ID="loanedMovieRepeater" runat="server">
-            <ItemTemplate>
-                <asp:Table runat="server" ID="movieListTable" CssClass="container col-md-3">
-                    <asp:TableRow>
-                        <asp:TableCell>
-                            <asp:Image ID="movieListPicture" ImageUrl='<%# Eval("PictureUrl") %>' runat="server" />
-                        </asp:TableCell>
-                        <asp:TableCell>
-                            <div id="movieListInfo" runat="server">
-                                <p class="movieTitle"><%# Eval("Title") %></p>
-                                <p><%# Eval("Genre") %></p>
-                                <p><%# Eval("Duration") %></p>
-                                <p><%# Eval("Review") %></p>
-                                <p><%# Eval("Score") %></p>
-                                <p><%# Eval("Status") %></p>
-                                <asp:Button ID="btnViewDetail" runat="server" CssClass="btn btn-warning" Text="View Detail" />
-                            </div>
-                        </asp:TableCell>
-                    </asp:TableRow>
-                </asp:Table>
-            </ItemTemplate>
-        </asp:Repeater>
+       </asp:DataList>
+
+
+        <p>Loaned Count:</p>
+         <asp:Label runat="server" ID="lblLoanedCount" Text='<%# Eval("LoanedCount") %>'></asp:Label>
+       
         <hr />
-        <asp:Repeater ID="movieRepeater" runat="server" OnItemCommand="movieList_ItemCommand">
-            <ItemTemplate>
-                <asp:Table runat="server" ID="movieListTable" CssClass="container col-md-3">
-                    <asp:TableRow>
-                        <asp:TableCell>
-                            <asp:Image ID="movieListPicture" ImageUrl='<%# Eval("PictureUrl") %>' runat="server" />
-                        </asp:TableCell>
-                        <asp:TableCell>
-                            <div id="movieListInfo" runat="server">
-                                <p class="movieTitle">
-                                    <asp:LinkButton ID="movieTitle" runat="server"
-                                    Text=' <%#Eval("Title")%>'
-                                 CommandName="MoreDetail"
-                                 CommandArgument='<%#Eval("MovieID")%>' />
-                                <p><%# Eval("Genre") %></p>
-                                <p><%# Eval("Duration") %></p>
-                                <p><%# Eval("ReviewScore") %></p>
-                                <p><%# Eval("Status") %></p>
-                            </div>
-                        </asp:TableCell></asp:TableRow></asp:Table></ItemTemplate></asp:Repeater></div></asp:Content>
+
+        <asp:Datalist ID="movieRepeater" runat="server" RepeatColumns="4"  RepeatLayout = "Table" OnItemCommand="movieList_ItemCommand" >
+                 <ItemTemplate>
+               <table class="table">
+                   <tr>
+                       <th colspan="2">
+                <p class="movieTitle">
+                <asp:LinkButton ID="movieTitle" runat="server"
+                 Text=' <%#Eval("Title")%>'
+                  CommandName="MoreDetail"
+                 CommandArgument='<%#Eval("MovieID")%>' /></p>
+                           </th>
+                       </tr>
+                   <tr>
+                       <td><asp:Image ID="movieListPicture" ImageUrl='<%# Eval("PictureUrl") %>' width="200px" height="350px" runat="server" /></td>
+                   </tr>
+                   <tr>
+                       <td><b>Genre:</b></td>
+                       <td>
+                            <%# Eval("Genre") %>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td><b>Length:</b></td>
+                       <td> <%# Eval("Duration") %></td>
+                   </tr>
+                   <tr>
+                       <td><b>Review Score:</b></td>
+                       <td><%# Eval("ReviewScore") %></td>
+                   </tr>
+                   <tr>
+                       <td><b>Status:</b></td>
+                       <td><%# Eval("Status") %></td>
+                   </tr>
+                   </table>
+           </ItemTemplate>
+        </asp:Datalist>
+        </div>
+</asp:Content>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -34,8 +35,22 @@ namespace Comp229_TeamAssign
 
             }
         }
-        //bind the data
-        protected void movieList_ItemCommand(object sender, RepeaterCommandEventArgs e)
+
+        protected void getLoanedCount()
+        {
+
+        }
+
+        protected void MovieList_ItemCommand(object sender, DataListCommandEventArgs e)
+        {
+            if (e.CommandName == "MoreDetail")
+            {
+                Session["MovieID"] = e.CommandArgument.ToString();
+                Response.Redirect("MovieDetail.aspx");
+            }
+        }
+        
+        protected void movieList_ItemCommand(object sender, DataListCommandEventArgs e)
         {
             if (e.CommandName == "MoreDetail")
             {
@@ -59,9 +74,35 @@ namespace Comp229_TeamAssign
             }
         }
 
+      
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-
+            //movieRepeater.Visible = true;
+            using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+            {
+                conn.Open();
+                if (ddlSearchBy.SelectedItem.Text == "Title")
+                {
+                    string data = txtSearch.Text;
+                    string query = "SELECT MovieID, Title, Genre, Duration, ReviewScore, Status, PictureUrl FROM Movie WHERE Title like'" + data + "%'";
+                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    DataSet ds = new DataSet();
+                    da.Fill(ds);
+                    MovieList.DataSource = ds;
+                    MovieList.DataBind();
+                }
+                if (ddlSearchBy.SelectedItem.Text == "Genre")
+                {
+                    string data = txtSearch.Text;
+                    string query = "SELECT MovieID, Title, Genre, Duration, ReviewScore, Status, PictureUrl FROM Movie WHERE Genre like'" + data + "%'";
+                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    DataSet ds = new DataSet();
+                    da.Fill(ds);
+                    MovieList.DataSource = ds;
+                    MovieList.DataBind();
+                }
+                conn.Close();
+            }
         }
     }
 }
