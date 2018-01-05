@@ -78,31 +78,38 @@ namespace Comp229_TeamAssign
       
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            lblSearchMovieList.Visible = true;
-            using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+            if (Page.User.Identity.IsAuthenticated)
             {
-                conn.Open();
-                if (ddlSearchBy.SelectedItem.Text == "Title")
+                lblSearchMovieList.Visible = true;
+                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                 {
-                    string data = txtSearch.Text;
-                    string query = "SELECT MovieID, Title, Genre, Duration, ReviewScore, Status, PictureUrl FROM Movie WHERE Title like'" + data + "%'";
-                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
-                    DataSet ds = new DataSet();
-                    da.Fill(ds);
-                    MovieList.DataSource = ds;
-                    MovieList.DataBind();
+                    conn.Open();
+                    if (ddlSearchBy.SelectedItem.Text == "Title")
+                    {
+                        string data = txtSearch.Text;
+                        string query = "SELECT MovieID, Title, Genre, Duration, ReviewScore, Status, PictureUrl FROM Movie WHERE Title like'" + data + "%'";
+                        SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                        DataSet ds = new DataSet();
+                        da.Fill(ds);
+                        MovieList.DataSource = ds;
+                        MovieList.DataBind();
+                    }
+                    else if (ddlSearchBy.SelectedItem.Text == "Genre")
+                    {
+                        string data = txtSearch.Text;
+                        string query = "SELECT MovieID, Title, Genre, Duration, ReviewScore, Status, PictureUrl FROM Movie WHERE Genre like'" + data + "%'";
+                        SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                        DataSet ds = new DataSet();
+                        da.Fill(ds);
+                        MovieList.DataSource = ds;
+                        MovieList.DataBind();
+                    }
+                    conn.Close();
                 }
-                else if (ddlSearchBy.SelectedItem.Text == "Genre")
-                {
-                    string data = txtSearch.Text;
-                    string query = "SELECT MovieID, Title, Genre, Duration, ReviewScore, Status, PictureUrl FROM Movie WHERE Genre like'" + data + "%'";
-                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
-                    DataSet ds = new DataSet();
-                    da.Fill(ds);
-                    MovieList.DataSource = ds;
-                    MovieList.DataBind();
-                }
-                conn.Close();
+            }
+            else
+            {
+                Response.Write("<script>alert('Please Login!');</script>");
             }
         }
     }
