@@ -41,23 +41,24 @@
     </div>
     <br />
     <div class="container page-context" style="">
-        <label class="subtitle">Movie List</label>
         <br />
-        <label>Search By:</label>
-          <asp:DropDownList ID="ddlSearchBy" runat="server" AutoPostBack="True"
+        <label style="font-size:large">Search By:</label>
+          <asp:DropDownList ID="ddlSearchBy" runat="server" AutoPostBack="True" height="30px" 
              OnSelectedIndexChanged="ddlSearchBy_SelectedIndexChanged">
         <asp:ListItem Text="Title"></asp:ListItem>       
         <asp:ListItem Text="Genre"></asp:ListItem>
         </asp:DropDownList>
-          <asp:TextBox ID="txtSearch" runat="server"></asp:TextBox>
+          <asp:TextBox height="30px" ID="txtSearch" runat="server"></asp:TextBox>
             <asp:Button ID="btnSearch" runat="server" Text="Search"
-                onclick="btnSearch_Click" />
+                onclick="btnSearch_Click" CssClass="btn btn-primary"/>
         <br />
         <hr />
         <br />
         </div>
     <div class="container">
-       <asp:DataList runat="server" ID="MovieList" RepeatColumns="3" CellSpacing = "30" RepeatLayout = "Table" OnItemCommand="MovieList_ItemCommand">
+            <asp:Label ID="lblSearchMovieList" runat="server" class="subtitle">Search Results:</asp:Label>
+
+       <asp:DataList runat="server" ID="MovieList" RepeatColumns="2" RepeatLayout = "Table" OnItemCommand="MovieList_ItemCommand">
            <ItemTemplate>
                <table class="table">
                    <tr>
@@ -95,12 +96,10 @@
 
        </asp:DataList>
 
-
-        <p>Loaned Count:</p>
          <asp:Label runat="server" ID="lblLoanedCount" Text='<%# Eval("LoanedCount") %>'></asp:Label>
        
         <hr />
-
+        <asp:Label ID="lblMovieList" runat="server" class="subtitle">Movie List</asp:Label>
         <asp:Datalist ID="movieRepeater" runat="server" RepeatColumns="4"  RepeatLayout = "Table" OnItemCommand="movieList_ItemCommand" >
                  <ItemTemplate>
                <table class="table">

@@ -15,6 +15,7 @@ namespace Comp229_TeamAssign
         protected void Page_Load(object sender, EventArgs e)
         {
             GetMovieInfo();
+            lblSearchMovieList.Visible = false;
         }
 
         protected void GetMovieInfo()
@@ -77,7 +78,7 @@ namespace Comp229_TeamAssign
       
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            //movieRepeater.Visible = true;
+            lblSearchMovieList.Visible = true;
             using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
             {
                 conn.Open();
@@ -91,7 +92,7 @@ namespace Comp229_TeamAssign
                     MovieList.DataSource = ds;
                     MovieList.DataBind();
                 }
-                if (ddlSearchBy.SelectedItem.Text == "Genre")
+                else if (ddlSearchBy.SelectedItem.Text == "Genre")
                 {
                     string data = txtSearch.Text;
                     string query = "SELECT MovieID, Title, Genre, Duration, ReviewScore, Status, PictureUrl FROM Movie WHERE Genre like'" + data + "%'";
