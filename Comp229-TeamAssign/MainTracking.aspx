@@ -49,10 +49,9 @@
         <asp:ListItem Text="Genre"></asp:ListItem>
         </asp:DropDownList>
           <asp:TextBox height="30px" ID="txtSearch" runat="server" placeholder="Insert data here"></asp:TextBox>
-                 <asp:RequiredFieldValidator ID = "txtSearchRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="InsertValidation" ControlToValidate="txtSearch" ForeColor="Red"></asp:RequiredFieldValidator>
-
             <asp:Button ID="btnSearch" runat="server" Text="Search"
                 onclick="btnSearch_Click" CssClass="btn btn-primary" ValidationGroup="InsertValidation"/>
+                         <asp:RequiredFieldValidator ID = "txtSearchRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="InsertValidation" ControlToValidate="txtSearch" ForeColor="Red"></asp:RequiredFieldValidator>
         <br />
         <hr />
         <br />
