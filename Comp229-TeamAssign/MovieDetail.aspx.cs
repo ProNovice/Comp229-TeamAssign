@@ -473,6 +473,7 @@ namespace Comp229_TeamAssign
 
                         conn.Close();
 
+                        UpdateLoanedCount(memberID);
                         LoadPage();
                     }
                 }
@@ -507,6 +508,7 @@ namespace Comp229_TeamAssign
 
                         conn.Close();
 
+                        UpdateLoanedCount(memberID);
                         LoadPage();
                     }
                 }
@@ -548,6 +550,7 @@ namespace Comp229_TeamAssign
 
                         conn.Close();
 
+                        UpdateLoanedCount(memberID);
                         LoadPage();
                     }
                 }
@@ -582,6 +585,7 @@ namespace Comp229_TeamAssign
 
                         conn.Close();
 
+                        UpdateLoanedCount(memberID);
                         LoadPage();
                     }
                 }
@@ -712,7 +716,6 @@ namespace Comp229_TeamAssign
                         "SELECT SUM(Score) FROM Review WHERE MovieID = @MovieID", conn);
                     getTotalScore.Parameters.AddWithValue("@MovieID", movieID);
                     string sum = getTotalScore.ExecuteScalar().ToString();
-                    //(double)getMovieScore.ExecuteScalar();
 
                     SqlCommand getCount = new SqlCommand(
                         "SELECT COUNT(Score) AS Count FROM Review WHERE MovieID = @MovieID", conn);
@@ -729,6 +732,34 @@ namespace Comp229_TeamAssign
                     updateMovieScore.Parameters.AddWithValue("@MovieID", movieID);
                     updateMovieScore.Parameters.AddWithValue("@Score", score);
                     updateMovieScore.ExecuteNonQuery();
+
+                    conn.Close();
+                }
+            }
+        }
+
+        private void UpdateLoanedCount(string memberID)
+        {
+            if (Session["MovieID"] != null)
+            {
+                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                {
+                    string movieID = Session["MovieID"].ToString();
+
+                    conn.Open();
+
+                    // get a Count of all loaned movies of the user
+                    SqlCommand getLoanedCount = new SqlCommand(
+                        "SELECT COUNT(*) FROM RelatedMovie WHERE MemberID = @MemberID", conn);
+                    getLoanedCount.Parameters.AddWithValue("@MemberID", memberID);
+                    string count = getLoanedCount.ExecuteScalar().ToString();
+
+                    // update movie score in movie db
+                    SqlCommand updateLoanedCount = new SqlCommand(
+                        "UPDATE Account SET LoanedCount = @Count WHERE MemberID = @MemberID;", conn);
+                    updateLoanedCount.Parameters.AddWithValue("@MemberID", memberID);
+                    updateLoanedCount.Parameters.AddWithValue("@Count", count);
+                    updateLoanedCount.ExecuteNonQuery();
 
                     conn.Close();
                 }
