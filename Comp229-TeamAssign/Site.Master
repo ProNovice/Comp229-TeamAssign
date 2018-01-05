@@ -72,10 +72,10 @@
                                         <div class="col-md-12">
                                             <label class="sr-only" for="inputUsername">Username</label>
                                             <asp:TextBox ID="txtUsername" runat="server" class="form-control" placeholder="Username" />
-                                            <asp:RequiredFieldValidator ID="usernameRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="InsertValidation" ControlToValidate="txtUsername" ForeColor="Red"></asp:RequiredFieldValidator>
+                                            <asp:RequiredFieldValidator ID="usernameRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="loginValidation" ControlToValidate="txtUsername" ForeColor="Red"></asp:RequiredFieldValidator>
                                             <label class="sr-only" for="inputPassword">Password</label>
                                             <asp:TextBox ID="txtPassword" runat="server" type="password" class="form-control" placeholder="Password" />
-                                            <asp:RequiredFieldValidator ID="passwordRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="InsertValidation" ControlToValidate="txtPassword" ForeColor="Red"></asp:RequiredFieldValidator>
+                                            <asp:RequiredFieldValidator ID="passwordRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="loginValidation" ControlToValidate="txtPassword" ForeColor="Red"></asp:RequiredFieldValidator>
                                             <asp:Button ID="loginBtn" runat="server" CssClass="btn btn-primary btn-block" OnClick="LoginBtn_Click" Text="Sign In" />
                                             <label id="lblLoginFeedback" runat="server"></label>
                                         </div>

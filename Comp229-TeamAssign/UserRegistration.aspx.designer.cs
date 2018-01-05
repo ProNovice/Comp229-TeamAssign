@@ -10,16 +10,16 @@
 namespace Comp229_TeamAssign {
     
     
-    public partial class Registration {
+    public partial class UserRegistration {
         
         /// <summary>
-        /// username control.
+        /// txtUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox username;
+        protected global::System.Web.UI.WebControls.TextBox txtUsername;
         
         /// <summary>
         /// usernameRequiredVal control.
@@ -31,13 +31,13 @@ namespace Comp229_TeamAssign {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator usernameRequiredVal;
         
         /// <summary>
-        /// email control.
+        /// txtEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox email;
+        protected global::System.Web.UI.WebControls.TextBox txtEmail;
         
         /// <summary>
         /// emailRequiredVal control.
@@ -49,13 +49,13 @@ namespace Comp229_TeamAssign {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator emailRequiredVal;
         
         /// <summary>
-        /// password control.
+        /// txtPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox password;
+        protected global::System.Web.UI.WebControls.TextBox txtPassword;
         
         /// <summary>
         /// passwordRequiredVal control.
@@ -67,13 +67,13 @@ namespace Comp229_TeamAssign {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator passwordRequiredVal;
         
         /// <summary>
-        /// confirmpwd control.
+        /// txtConfirmPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox confirmpwd;
+        protected global::System.Web.UI.WebControls.TextBox txtConfirmPassword;
         
         /// <summary>
         /// confirmpwdRequiredVal control.
@@ -101,14 +101,5 @@ namespace Comp229_TeamAssign {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button submitBtn;
-        
-        /// <summary>
-        /// dbErrorMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label dbErrorMessage;
     }
 }
