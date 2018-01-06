@@ -17,19 +17,11 @@ namespace Comp229_TeamAssign
             GetMovieInfo();
             GetRecentMovieInfo();
             lblSearchMovieList.Visible = false;
-            lblMovieList.Visible = true;
-            movieRepeater.Visible = true;
-            lblRecentMovies.Visible = true;
-            recentMovies.Visible = true;
             lblLoanedMovie.Visible = false;
             loanedMovie.Visible = false;
             if (Page.User.Identity.IsAuthenticated)
             {
                 GetLoanedMovieInfo();
-                movieRepeater.Visible = false;
-                recentMovies.Visible = false;
-                lblMovieList.Visible = false;
-                lblRecentMovies.Visible = false;
                 lblLoanedMovie.Visible = true;
                 loanedMovie.Visible = true;
             }
@@ -56,7 +48,6 @@ namespace Comp229_TeamAssign
 
                     conn.Close();
                 }
-
             }
             return memberID;
         }
@@ -66,15 +57,25 @@ namespace Comp229_TeamAssign
             using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
             {
                 conn.Open();
-
                 SqlCommand comm = new SqlCommand("SELECT MovieID, Title, Genre, Duration, ReviewScore, Status, PictureUrl FROM Movie;", conn);
-
                 SqlDataReader reader = comm.ExecuteReader();
-
                 movieRepeater.DataSource = reader;
                 movieRepeater.DataBind();
-
                 conn.Close();
+            }
+            string memberID = GetMemberID();
+            if (Page.User.Identity.IsAuthenticated)
+            {
+                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                {
+                    conn.Open();
+                    SqlCommand comm = new SqlCommand("SELECT * FROM Movie INNER JOIN RelatedMovie ON Movie.MovieID = RelatedMovie.MovieID WHERE MemberID = @MemberID AND RelatedMovie.Status != 'hidden';", conn);
+                    comm.Parameters.AddWithValue("@MemberID", memberID);
+                    SqlDataReader reader = comm.ExecuteReader();
+                    movieRepeater.DataSource = reader;
+                    movieRepeater.DataBind();
+                    conn.Close();
+                }
 
             }
         }
@@ -93,7 +94,20 @@ namespace Comp229_TeamAssign
                 recentMovies.DataSource = ds;
                 recentMovies.DataBind();
                 conn.Close();
-
+            }
+            string memberID = GetMemberID();
+            if (Page.User.Identity.IsAuthenticated)
+            {
+                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                {
+                    conn.Open();
+                    SqlCommand comm = new SqlCommand("SELECT * FROM Movie INNER JOIN RelatedMovie ON Movie.MovieID = RelatedMovie.MovieID WHERE MemberID = @MemberID AND RelatedMovie.Status != 'hidden' AND PublishedDate = '2015-09-24';", conn);
+                    comm.Parameters.AddWithValue("@MemberID", memberID);
+                    SqlDataReader reader = comm.ExecuteReader();
+                    movieRepeater.DataSource = reader;
+                    movieRepeater.DataBind();
+                    conn.Close();
+                }
             }
         }
 
@@ -104,9 +118,6 @@ namespace Comp229_TeamAssign
             {
                 string memberID = GetMemberID();
                 conn.Open();
-                //SqlCommand cmd = new SqlCommand("SELECT Movie.MovieID, Movie.Title, Movie.Genre, Movie.Duration, Movie.ReviewScore, RelatedMovie.MovieID, RelatedMovie.MemberID, RelatedMovie.Status, Account.MemberID FROM RelatedMovie INNER JOIN Movie ON RelatedMovie.MovieID = Movie.MovieID INNER JOIN Account ON RelatedMovie.MemberID = Account.MemberID WHERE MemberID = @MemberID And RelatedMovie.Status = 'loaned';");
-                //cmd.Parameters.AddWithValue("@MemberID",memberID);
-                //SqlDataReader reader = cmd.ExecuteReader();
                 SqlCommand getLoanedMovie = new SqlCommand("SELECT * FROM Movie INNER JOIN RelatedMovie ON Movie.MovieID = RelatedMovie.MovieID WHERE MemberID = @MemberID AND RelatedMovie.Status = 'loaned';",conn);
                 getLoanedMovie.Parameters.AddWithValue("@MemberID", memberID);
                 SqlDataReader reader = getLoanedMovie.ExecuteReader();
