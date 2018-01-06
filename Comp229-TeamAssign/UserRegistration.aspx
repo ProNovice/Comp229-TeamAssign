@@ -10,7 +10,7 @@
                     <div class="row">
                         <div>
                             <div class="form-group">
-                                <label>Username: </label>
+                                <label style="font-size:large">Username: </label>
                                 <asp:TextBox ID="txtUsername" runat="server" class="form-control input-lg" placeholder="Username"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="usernameRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="registrationValidation" ControlToValidate="txtUsername" ForeColor="Red"></asp:RequiredFieldValidator>
                             </div>
@@ -18,7 +18,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <label>Email: </label>
+                            <label style="font-size:large">Email: </label>
                             <asp:TextBox ID="txtEmail" runat="server" class="form-control input-lg" placeholder="Email Address"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="emailRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="registrationValidation" ControlToValidate="txtEmail" ForeColor="Red"></asp:RequiredFieldValidator>
                         </div>
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div>
                             <div class="form-group">
-                                <label>Password: </label>
+                                <label style="font-size:large" >Password: </label>
                                 <asp:TextBox ID="txtPassword" type="password" runat="server" class="form-control input-lg" placeholder="Password"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="passwordRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="registrationValidation" ControlToValidate="txtPassword" ForeColor="Red"></asp:RequiredFieldValidator>
                             </div>
@@ -35,7 +35,7 @@
                     <div class="row">
                         <div>
                             <div class="form-group">
-                                <label>Confirm Password: </label>
+                                <label style="font-size:large">Confirm Password: </label>
                                 <asp:TextBox ID="txtConfirmPassword" type="password" runat="server" class="form-control input-lg" placeholder="Confirm Password"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="confirmpwdRequiredVal" runat="server" ErrorMessage="Cannot Be Empty" ValidationGroup="registrationValidation" ControlToValidate="txtConfirmPassword" ForeColor="Red"></asp:RequiredFieldValidator>
                                 <p>

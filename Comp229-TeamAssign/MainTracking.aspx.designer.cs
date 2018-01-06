@@ -67,13 +67,22 @@ namespace Comp229_TeamAssign {
         protected global::System.Web.UI.WebControls.DataList MovieList;
         
         /// <summary>
-        /// lblLoanedCount control.
+        /// lblRecentMovies control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLoanedCount;
+        protected global::System.Web.UI.WebControls.Label lblRecentMovies;
+        
+        /// <summary>
+        /// recentMovies control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataList recentMovies;
         
         /// <summary>
         /// lblMovieList control.
