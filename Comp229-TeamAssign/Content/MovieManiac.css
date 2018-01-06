@@ -1,8 +1,6 @@
 ﻿
 
 /*Master Page*/
-body {
-}
 
 #login-dp {
     min-width: 250px;
@@ -33,7 +31,6 @@ body {
             border-top: 0 none;
         }
 }
-
 /*User Registration Page*/
 /* Credit to bootsnipp.com for the css for the color graph */
 .colorgraph {

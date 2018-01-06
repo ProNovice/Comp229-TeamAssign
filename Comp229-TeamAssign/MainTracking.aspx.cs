@@ -15,7 +15,16 @@ namespace Comp229_TeamAssign
         protected void Page_Load(object sender, EventArgs e)
         {
             GetMovieInfo();
+            GetRecentMovieInfo();
             lblSearchMovieList.Visible = false;
+            lblMovieList.Visible = true;
+            movieRepeater.Visible = true;
+            lblRecentMovies.Visible = true;
+            recentMovies.Visible = true;
+            if (Page.User.Identity.IsAuthenticated)
+            {
+                movieRepeater.Visible = false;
+            }
         }
 
         protected void GetMovieInfo()
@@ -37,10 +46,24 @@ namespace Comp229_TeamAssign
             }
         }
 
-        protected void getLoanedCount()
+        protected void GetRecentMovieInfo()
         {
+            // using SqlConnection from Web.config
+            using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+            {
+                conn.Open();
+                string data = "2015-09-24";
+                string query = "SELECT MovieID, Title, Genre, Duration, ReviewScore, Status, PictureUrl FROM Movie WHERE PublishedDate like'" + data + "%'";
+                SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                recentMovies.DataSource = ds;
+                recentMovies.DataBind();
+                conn.Close();
 
+            }
         }
+
 
         protected void MovieList_ItemCommand(object sender, DataListCommandEventArgs e)
         {
@@ -50,7 +73,7 @@ namespace Comp229_TeamAssign
                 Response.Redirect("MovieDetail.aspx");
             }
         }
-        
+
         protected void movieList_ItemCommand(object sender, DataListCommandEventArgs e)
         {
             if (e.CommandName == "MoreDetail")
@@ -59,7 +82,14 @@ namespace Comp229_TeamAssign
                 Response.Redirect("MovieDetail.aspx");
             }
         }
-
+        protected void recentMovie_ItemCommand(object sender, DataListCommandEventArgs e)
+        {
+            if (e.CommandName == "MoreDetail")
+            {
+                Session["MovieID"] = e.CommandArgument.ToString();
+                Response.Redirect("MovieDetail.aspx");
+            }
+        }
 
         protected void ddlSearchBy_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -75,12 +105,16 @@ namespace Comp229_TeamAssign
             }
         }
 
-      
+
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             if (Page.User.Identity.IsAuthenticated)
             {
                 lblSearchMovieList.Visible = true;
+                lblMovieList.Visible = false;
+                movieRepeater.Visible = false;
+                lblRecentMovies.Visible = false;
+                recentMovies.Visible = false;
                 using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                 {
                     conn.Open();
@@ -112,5 +146,6 @@ namespace Comp229_TeamAssign
                 Response.Write("<script>alert('Please Login!');</script>");
             }
         }
+
     }
 }
