@@ -144,27 +144,35 @@ namespace Comp229_TeamAssign
         /// </summary>
         private void UpdateMovie()
         {
-            if (Page.User.Identity.Name == "Movie Maniac")
+            if (Page.User.Identity.Name == "Movie Maniac" && Session["MovieID"] != null)
             {
+                string movieID = Session["MovieID"].ToString();
+
                 SaveMovieSession();
+
                 if (Session["Movie"] != null)
                 {
                     Movie movie = new Movie();
                     movie = Session["Movie"] as Movie;
 
-                    movie.PostedDate = DateTime.Today.ToString("YYYY-MM-DD");
-
                     // using SqlConnection from Web.config
                     using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
                     {
                         conn.Open();
-                        
-                        // Update movie
+
+                        int index;
+                        // get index
+                        SqlCommand getLastIndex = new SqlCommand(
+                            "SELECT MAX(MovieID) FROM Movie;", conn);
+                        index = (int)getLastIndex.ExecuteScalar() + 1;
+
+                        // insert movie
                         SqlCommand insertMovie = new SqlCommand(
                              "UPDATE Movie SET Title = @Title, Genre = @Genre, Director = @Director, Company = @Company, " +
                              "PublishedDate = @PublishedDate, Duration = @Duration, OfficialLink = @OfficialLink, Description = @Description, " +
                              "ReviewScore = @ReviewScore, Status = @Status, PictureUrl = @PictureUrl " +
                              "WHERE MovieID = @MovieID;", conn);
+                        insertMovie.Parameters.AddWithValue("@MovieID", movieID);
                         insertMovie.Parameters.AddWithValue("@Title", movie.Title);
                         insertMovie.Parameters.AddWithValue("@Genre", movie.Genre);
                         insertMovie.Parameters.AddWithValue("@Director", movie.Director);
