@@ -21,7 +21,7 @@ namespace Comp229_TeamAssign
         }
 
         /// <summary>
-        /// Method to link UpdateMovie method.
+        /// Method to link UpdateMovie method
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
