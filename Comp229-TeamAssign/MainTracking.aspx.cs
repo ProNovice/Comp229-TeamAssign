@@ -21,12 +21,45 @@ namespace Comp229_TeamAssign
             movieRepeater.Visible = true;
             lblRecentMovies.Visible = true;
             recentMovies.Visible = true;
+            lblLoanedMovie.Visible = false;
+            loanedMovie.Visible = false;
             if (Page.User.Identity.IsAuthenticated)
             {
+                GetLoanedMovieInfo();
                 movieRepeater.Visible = false;
+                recentMovies.Visible = false;
+                lblMovieList.Visible = false;
+                lblRecentMovies.Visible = false;
+                lblLoanedMovie.Visible = true;
+                loanedMovie.Visible = true;
             }
         }
 
+        /// get memberID from DB
+        /// if there is no match, return "".
+        private string GetMemberID()
+        {
+            string memberID = "";
+
+            if (Page.User.Identity.IsAuthenticated)
+            {
+                string username = Page.User.Identity.Name;
+
+                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand getMemberID = new SqlCommand(
+                        "SELECT MemberID FROM Account WHERE UserName = @UserName;", conn);
+                    getMemberID.Parameters.AddWithValue("@UserName", username);
+                    memberID = getMemberID.ExecuteScalar().ToString();
+
+                    conn.Close();
+                }
+
+            }
+            return memberID;
+        }
         protected void GetMovieInfo()
         {
             // using SqlConnection from Web.config
@@ -64,6 +97,25 @@ namespace Comp229_TeamAssign
             }
         }
 
+        protected void GetLoanedMovieInfo()
+        {
+            // using SqlConnection from Web.config
+            using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+            {
+                string memberID = GetMemberID();
+                conn.Open();
+                //SqlCommand cmd = new SqlCommand("SELECT Movie.MovieID, Movie.Title, Movie.Genre, Movie.Duration, Movie.ReviewScore, RelatedMovie.MovieID, RelatedMovie.MemberID, RelatedMovie.Status, Account.MemberID FROM RelatedMovie INNER JOIN Movie ON RelatedMovie.MovieID = Movie.MovieID INNER JOIN Account ON RelatedMovie.MemberID = Account.MemberID WHERE MemberID = @MemberID And RelatedMovie.Status = 'loaned';");
+                //cmd.Parameters.AddWithValue("@MemberID",memberID);
+                //SqlDataReader reader = cmd.ExecuteReader();
+                SqlCommand getLoanedMovie = new SqlCommand("SELECT * FROM Movie INNER JOIN RelatedMovie ON Movie.MovieID = RelatedMovie.MovieID WHERE MemberID = @MemberID AND Status = 'loaned';");
+                getLoanedMovie.Parameters.AddWithValue("@MemberID", memberID);
+                SqlDataReader reader = getLoanedMovie.ExecuteReader();
+                loanedMovie.DataSource = reader;
+                loanedMovie.DataBind();
+                reader.Close();
+                conn.Close();
+            }
+        }
 
         protected void MovieList_ItemCommand(object sender, DataListCommandEventArgs e)
         {
@@ -83,6 +135,14 @@ namespace Comp229_TeamAssign
             }
         }
         protected void recentMovie_ItemCommand(object sender, DataListCommandEventArgs e)
+        {
+            if (e.CommandName == "MoreDetail")
+            {
+                Session["MovieID"] = e.CommandArgument.ToString();
+                Response.Redirect("MovieDetail.aspx");
+            }
+        }
+        protected void loanedMovie_ItemCommand(object sender, DataListCommandEventArgs e)
         {
             if (e.CommandName == "MoreDetail")
             {

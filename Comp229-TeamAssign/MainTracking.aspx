@@ -99,6 +99,41 @@
 
        </asp:DataList>
        <hr />
+            <%--Display Loaned Movie List--%>
+            <asp:Label ID="lblLoanedMovie" runat="server" class="subtitle">Loaned Movies:</asp:Label>
+        <asp:Datalist ID="loanedMovie" BackColor="black" ForeColor="White" runat="server" RepeatColumns="4"  RepeatLayout = "Table" OnItemCommand="loanedMovie_ItemCommand" >
+                 <ItemTemplate>
+               <table class="table">
+                   <tr>
+                       <th colspan="2">
+                <p class="movieTitle">
+                <asp:LinkButton ID="movieTitle" runat="server"
+                 Text=' <%#Eval("Title")%>'
+                  CommandName="MoreDetail"
+                 CommandArgument='<%#Eval("MovieID")%>' /></p>
+                           </th>
+                       </tr>
+                   <tr>
+                       <td><asp:Image ID="movieListPicture" ImageUrl='<%# Eval("PictureUrl") %>' width="200px" height="350px" runat="server" /></td>
+                   </tr>
+                   <tr>
+                       <td><b>Genre:</b></td>
+                       <td>
+                            <%# Eval("Genre") %>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td><b>Length:</b></td>
+                       <td> <%# Eval("Duration") %></td>
+                   </tr>
+                   <tr>
+                       <td><b>Review Score:</b></td>
+                       <td><%# Eval("ReviewScore") %></td>
+                   </tr>
+                   </table>
+           </ItemTemplate>
+        </asp:Datalist>
+        <hr />
             <%--Display Recent Movies List--%>
             <asp:Label ID="lblRecentMovies" runat="server" class="subtitle">Recent Movies:</asp:Label>
         <asp:Datalist ID="recentMovies" BackColor="black" ForeColor="White" runat="server" RepeatColumns="4"  RepeatLayout = "Table" OnItemCommand="recentMovie_ItemCommand" >
