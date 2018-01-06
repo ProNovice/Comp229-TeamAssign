@@ -55,7 +55,7 @@ Duration int,
 OfficialLink varchar(255), 
 Description varchar(1000), 
 ReviewScore double precision DEFAULT 0 NOT NULL,
-Status varchar(20) DEFAULT 'Owned' NOT NULL, 
+Status varchar(20) DEFAULT 'Available' NOT NULL, 
 PostedDate date NOT NULL, 
 PictureUrl varchar(255) NOT NULL, 
 CONSTRAINT [PK_Movie] PRIMARY KEY CLUSTERED

@@ -27,7 +27,9 @@ namespace Comp229_TeamAssign
             UpdateMovieScore();
             LoadMovieDetail();
             LoadReview();
+            SetAdministratorOpctions();
         }
+
 
         #region Related Movie
         /// <summary>
@@ -66,6 +68,56 @@ namespace Comp229_TeamAssign
         {
             UnhidMovie();
         }
+        /// <summary>
+        /// Redirect UpdateMovie page when the user is the Administrator
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void UpdateBtn_Click(object sender, EventArgs e)
+        {
+            // only allowed for Administrator
+            if (Page.User.Identity.Name == "Movie Maniac" && Session["MovieID"] != null)
+            {
+                Response.Redirect("MovieUpdate.aspx");
+            }
+        }
+
+        protected void DeleteBtn_Click(object sender, EventArgs e)
+        {
+            // only allowed for Administrator
+            if (Page.User.Identity.Name == "Movie Maniac" && Session["MovieID"] != null)
+            {
+                string movieID = Session["MovieID"].ToString();
+
+                using (SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["MovieManiacDB"].ConnectionString))
+                {
+                    conn.Open();
+
+                    // delete RelatedMovies before delete movie
+                    SqlCommand deleteRelatedMovie = new SqlCommand(
+                        "DELETE FROM RelatedMovie WHERE MovieID = @MovieID", conn);
+                    deleteRelatedMovie.Parameters.AddWithValue("@MovieID", movieID);
+                    deleteRelatedMovie.ExecuteNonQuery();
+
+                    // delete Reviews before delete movie
+                    SqlCommand deleteReview = new SqlCommand(
+                        "DELETE FROM Review WHERE MovieID = @MovieID", conn);
+                    deleteReview.Parameters.AddWithValue("@MovieID", movieID);
+                    deleteReview.ExecuteNonQuery();
+
+                    // delete movie
+                    SqlCommand deleteMovie = new SqlCommand(
+                        "DELETE FROM Movie WHERE MovieID = @MovieID", conn);
+                    deleteMovie.Parameters.AddWithValue("@MovieID", movieID);
+                    deleteMovie.ExecuteNonQuery();
+
+                    conn.Close();
+
+                    Response.Redirect("MainTracking.aspx");
+                }
+            }
+        }
+
         #endregion
 
         #region Related Review        
@@ -422,6 +474,18 @@ namespace Comp229_TeamAssign
                 btnReturn.Visible = false;
                 // hide writing review form
                 tblWritingReview.Visible = false;
+            }
+        }
+
+        /// <summary>
+        /// Set visibility of Options for Administrator
+        /// </summary>
+        private void SetAdministratorOpctions()
+        {
+            if (Page.User.Identity.Name == "Movie Maniac")
+            {
+                btnUpdate.Visible = true;
+                btnDelete.Visible = true;
             }
         }
 
