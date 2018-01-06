@@ -107,7 +107,7 @@ namespace Comp229_TeamAssign
                 //SqlCommand cmd = new SqlCommand("SELECT Movie.MovieID, Movie.Title, Movie.Genre, Movie.Duration, Movie.ReviewScore, RelatedMovie.MovieID, RelatedMovie.MemberID, RelatedMovie.Status, Account.MemberID FROM RelatedMovie INNER JOIN Movie ON RelatedMovie.MovieID = Movie.MovieID INNER JOIN Account ON RelatedMovie.MemberID = Account.MemberID WHERE MemberID = @MemberID And RelatedMovie.Status = 'loaned';");
                 //cmd.Parameters.AddWithValue("@MemberID",memberID);
                 //SqlDataReader reader = cmd.ExecuteReader();
-                SqlCommand getLoanedMovie = new SqlCommand("SELECT * FROM Movie INNER JOIN RelatedMovie ON Movie.MovieID = RelatedMovie.MovieID WHERE MemberID = @MemberID AND Status = 'loaned';",conn);
+                SqlCommand getLoanedMovie = new SqlCommand("SELECT * FROM Movie INNER JOIN RelatedMovie ON Movie.MovieID = RelatedMovie.MovieID WHERE MemberID = @MemberID AND RelatedMovie.Status = 'loaned';",conn);
                 getLoanedMovie.Parameters.AddWithValue("@MemberID", memberID);
                 SqlDataReader reader = getLoanedMovie.ExecuteReader();
                 loanedMovie.DataSource = reader;
