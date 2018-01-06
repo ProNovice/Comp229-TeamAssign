@@ -60,6 +60,8 @@
                     <asp:Button runat="server" ID="btnUnhide" Text="Unhide" Visible="false" CssClass="btn btn-warning float-right" OnClick="UnhideBtn_Click" />
                     <asp:Button runat="server" ID="btnRent" Text="Rent" CssClass="btn btn-warning float-right" OnClick="RentBtn_Click" />
                     <asp:Button runat="server" ID="btnReturn" Text="Return" Visible="false" CssClass="btn btn-warning float-right" OnClick="ReturnBtn_Click" />
+                    <asp:Button runat="server" ID="btnUpdate" Text="Update" Visible="false" CssClass="btn btn-warning float-right" OnClick="UpdateBtn_Click" />
+                    <asp:Button runat="server" ID="btnDelete" Text="Delete" Visible="false" CssClass="btn btn-danger float-right" OnClick="DeleteBtn_Click"/>
                 </td>
             </tr>
             <tr>
